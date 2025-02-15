@@ -14,39 +14,40 @@
       padding: 0;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
     }
-    
+
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      flex-grow: 1;
+      min-height: 80vh; /* Se ajusta la altura para que no quede tan abajo */
     }
-    
+
     .title {
-      font-size: 32px;
+      font-size: 28px;
       font-weight: bold;
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
     .button-container {
       display: flex;
       flex-direction: column;
-      gap: 15px;
-      width: 80%;
-      max-width: 400px;
+      gap: 12px;
+      width: 90%;
+      max-width: 350px;
     }
 
     .button {
       background: linear-gradient(145deg, #1e1e1e, #292929);
-      padding: 15px;
-      border-radius: 12px;
+      padding: 14px;
+      border-radius: 10px;
       text-decoration: none;
       color: white;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: bold;
       transition: all 0.3s ease;
       box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
@@ -58,11 +59,11 @@
       transform: scale(1.05);
     }
 
-    /* Icono de información */
+    /* Ícono de información */
     .info-icon {
       position: fixed;
-      bottom: 80px;
-      right: 20px;
+      bottom: 60px;
+      right: 15px;
       background-color: #007BFF;
       width: 45px;
       height: 45px;
@@ -79,28 +80,28 @@
 
     .popup {
       position: fixed;
-      bottom: 130px;
-      right: 20px;
+      bottom: 110px;
+      right: 15px;
       background-color: #333;
       color: white;
-      padding: 15px;
-      border-radius: 12px;
+      padding: 12px;
+      border-radius: 10px;
       box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-      max-width: 300px;
+      max-width: 280px;
       display: none;
       text-align: left;
-      font-size: 14px;
+      font-size: 13px;
     }
 
     .popup button {
       background-color: #007BFF;
       color: white;
       border: none;
-      padding: 8px 12px;
-      border-radius: 8px;
+      padding: 6px 10px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 14px;
-      margin-top: 10px;
+      font-size: 13px;
+      margin-top: 8px;
     }
 
     .popup button:hover {
@@ -109,11 +110,14 @@
 
     /* Estilo del contacto de Telegram */
     .footer {
+      width: 100%;
       background-color: #1e1e1e;
-      padding: 15px 10px;
+      padding: 10px 5px;
       text-align: center;
-      font-size: 16px;
+      font-size: 14px;
       font-weight: bold;
+      position: fixed;
+      bottom: 0;
     }
 
     .footer a {
@@ -156,7 +160,7 @@
     <button onclick="togglePopup()">Cerrar</button>
   </div>
 
-  <!-- Contacto en la parte inferior -->
+  <!-- Contacto en la parte inferior siempre visible -->
   <div class="footer">
     📩 Contacto para dudas o sugerencias: 
     <a href="https://t.me/OnefraGT" target="_blank">@OnefraGT</a>
