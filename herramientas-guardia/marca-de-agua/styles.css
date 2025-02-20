@@ -75,7 +75,6 @@ input[type="text"] {
   justify-content: center;
 }
 
-/* Botón común: rectangular con bordes redondeados */
 .btn {
   background-color: var(--secondary-color);
   color: var(--text-color);
@@ -95,24 +94,22 @@ input[type="text"] {
   transform: scale(1.05);
 }
 
-/* Botones específicos con colores individuales */
 .capture-btn {
-  background-color: #007aff;  /* Azul para capturar */
+  background-color: #007aff;
 }
 
-.retake-btn, .retake-btn {
-  background-color: #ff3b30;  /* Rojo para rehacer */
+.retake-btn {
+  background-color: #ff3b30;
 }
 
 .share-btn {
-  background-color: #34c759;  /* Verde para compartir */
+  background-color: #34c759;
 }
 
 .download-btn {
-  background-color: #007aff;  /* Azul para descargar */
+  background-color: #007aff;
 }
 
-/* Ocultar el input de archivos */
 #fileInput {
   display: none;
 }
@@ -152,7 +149,6 @@ video {
   text-decoration: none;
 }
 
-/* Modal de Información */
 .modal {
   position: fixed;
   top: 0;
@@ -196,4 +192,27 @@ video {
 
 .hidden {
   display: none;
+}
+
+/* Estilos responsive para móviles */
+@media only screen and (max-width: 600px) {
+  .container {
+    padding: 10px;
+  }
+  h1 {
+    font-size: 24px;
+  }
+  input[type="text"] {
+    width: 90%;
+    font-size: 14px;
+  }
+  .btn {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+  #previewCanvas,
+  video {
+    width: 100%;
+    height: auto;
+  }
 }
