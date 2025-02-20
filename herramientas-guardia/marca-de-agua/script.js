@@ -18,7 +18,6 @@ const closeModal = document.getElementById('closeModal');
 let cameraStream = null;
 
 // ============ Función para Reducir Saturación ============
-// factor: valor entre 0 (sin cambio) y 1 (completamente en escala de grises)
 function reduceSaturation(ctx, width, height, factor) {
   let imageData = ctx.getImageData(0, 0, width, height);
   let data = imageData.data;
@@ -33,13 +32,9 @@ function reduceSaturation(ctx, width, height, factor) {
 }
 
 // ============ Parámetros y Funciones para la Marca de Agua ============
-
-// Fuente estilizada: "15px cursive"
 const tileFont = "15px cursive";
-// Opacidad de la marca: 0.15 para que se note sin dominar la imagen.
 const watermarkOpacity = 0.15;
 
-// Función que dibuja el texto letra a letra siguiendo una curva sinusoidal.
 function drawTextOnSineCurve(ctx, text, startX, baseY, amplitude, period) {
   let x = startX;
   for (let i = 0; i < text.length; i++) {
@@ -57,9 +52,6 @@ function drawTextOnSineCurve(ctx, text, startX, baseY, amplitude, period) {
   }
 }
 
-// Función que genera un único tile que cubre el tamaño completo del canvas final.
-// En este tile se dibuja la frase decorada (con "**" al inicio y al final) repetida en diagonal,
-// con separador y efecto ondulado.
 function generateWatermarkTile(text, canvasWidth, canvasHeight) {
   const decoratedText = "**" + text + "**";
   
@@ -100,11 +92,9 @@ function generateWatermarkTile(text, canvasWidth, canvasHeight) {
   return tileCanvas;
 }
 
-// Función que aplica el patrón de marca de agua sobre el canvas principal.
 function applyWatermarkPattern(mainCanvas, text) {
   const ctx = mainCanvas.getContext('2d');
   const tileCanvas = generateWatermarkTile(text, mainCanvas.width, mainCanvas.height);
-  const pattern = ctx.createPattern(tileCanvas, 'repeat');
   ctx.save();
   ctx.globalAlpha = watermarkOpacity;
   ctx.drawImage(tileCanvas, 0, 0, mainCanvas.width, mainCanvas.height);
@@ -112,7 +102,6 @@ function applyWatermarkPattern(mainCanvas, text) {
 }
 
 // ============ Manejo de Botones y Procesamiento de Archivos ============
-
 uploadBtn.addEventListener('click', () => {
   fileInput.click();
 });
@@ -126,7 +115,8 @@ fileInput.addEventListener('change', () => {
 cameraBtn.addEventListener('click', () => {
   cameraSection.style.display = 'block';
   previewSection.style.display = 'none';
-  navigator.mediaDevices.getUserMedia({ video: true })
+  // Se solicita la cámara trasera mediante la restricción facingMode: "environment"
+  navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
     .then(stream => {
       cameraStream = stream;
       videoPreview.srcObject = stream;
