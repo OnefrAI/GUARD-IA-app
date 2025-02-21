@@ -41,23 +41,7 @@ h1 {
   margin-bottom: 20px;
 }
 
-.info-btn {
-  position: absolute;
-  right: 0;
-  top: 0;
-  width: 30px;
-  height: 30px;
-  border-radius: 50%;
-  background-color: var(--secondary-color);
-  border: none;
-  color: var(--text-color);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-}
+/* Se eliminó el estilo del botón de información */
 
 input[type="text"] {
   padding: 10px;
@@ -223,6 +207,8 @@ video {
   text-align: left;
   position: relative;
 }
+
+/* Se han eliminado estilos del botón info */
 
 .close-btn {
   position: absolute;
