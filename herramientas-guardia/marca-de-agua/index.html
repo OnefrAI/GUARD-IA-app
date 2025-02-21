@@ -12,7 +12,7 @@
   <div class="container">
     <header>
       <h1>Marca de agua GUARD-IA 💧</h1>
-      <button id="infoBtn" class="btn info-btn" title="¿Qué hace esta herramienta?">i</button>
+      <!-- Se ha eliminado el botón de información -->
     </header>
     
     <!-- Campo de texto para la marca de agua -->
@@ -28,7 +28,7 @@
 
     <div class="buttons">
       <button id="uploadBtn" class="btn">Subir Documento</button>
-      <!-- Usamos el mismo botón para iniciar la cámara y capturar la foto -->
+      <!-- Botón único para iniciar la cámara y capturar -->
       <button id="cameraBtn" class="btn">Tomar Foto</button>
     </div>
     <input type="file" id="fileInput" accept="application/pdf,image/*">
@@ -59,22 +59,7 @@
     </div>
   </div>
   
-  <!-- Modal de Información -->
-  <div id="infoModal" class="modal hidden">
-    <div class="modal-content">
-      <span id="closeModal" class="close-btn">&times;</span>
-      <h2>Marca de agua GUARD-IA</h2>
-      <p>
-        Esta herramienta le permite aplicar una marca de agua personalizada a sus documentos o fotos.
-      </p>
-      <p>
-        Si no modifica el texto, se usará por defecto "Documento Protegido con GUARD-IA". Si escribe otro, se utilizará ese.
-      </p>
-      <p>
-        Puede ajustar el color y la opacidad para personalizarla. Además, al activar la cámara se muestra en el visor el efecto superpuesto, permitiéndole ver en tiempo real la previsualización.
-      </p>
-    </div>
-  </div>
+  <!-- Modal de Información se ha eliminado -->
   
   <!-- Polyfill para WebRTC (para mayor compatibilidad) -->
   <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
