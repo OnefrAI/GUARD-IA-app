@@ -67,6 +67,33 @@ input[type="text"] {
   font-size: 16px;
 }
 
+/* Controles de personalización en línea */
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.controls label {
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+.controls input[type="color"] {
+  width: 30px;
+  height: 30px;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.controls input[type="range"] {
+  width: 150px;
+}
+
 .buttons {
   display: flex;
   gap: 20px;
@@ -133,10 +160,25 @@ input[type="text"] {
   padding: 10px 15px;
 }
 
+/* Contenedor para la cámara con visor y overlay */
+.camera-container {
+  position: relative;
+  display: inline-block;
+}
+
 video {
   border: 2px solid #333;
   border-radius: 8px;
   max-width: 100%;
+  display: block;
+}
+
+#overlayCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .footer {
