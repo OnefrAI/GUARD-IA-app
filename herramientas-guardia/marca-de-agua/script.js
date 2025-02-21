@@ -1,4 +1,4 @@
-// Referencias
+// Referencias generales
 const fileInput = document.getElementById('fileInput');
 const uploadBtn = document.getElementById('uploadBtn');
 const cameraBtn = document.getElementById('cameraBtn');
@@ -15,7 +15,43 @@ const infoBtn = document.getElementById('infoBtn');
 const infoModal = document.getElementById('infoModal');
 const closeModal = document.getElementById('closeModal');
 
+// Referencias para controles de personalización
+const colorPicker = document.getElementById('colorPicker');
+const opacityRange = document.getElementById('opacityRange');
+
+// Referencia para el overlay en la cámara
+const overlayCanvas = document.getElementById('overlayCanvas');
+
+// Variables dinámicas para la marca de agua
+let watermarkColor = colorPicker.value;
+let watermarkOpacity = parseFloat(opacityRange.value);
+
 let cameraStream = null;
+// Variable para guardar la imagen cargada (modo archivo)
+let currentImg = null;
+
+// Función para actualizar dinámicamente el overlay en la vista de la cámara
+function updateOverlay() {
+  if (cameraSection.style.display !== 'none' && videoPreview.videoWidth) {
+    overlayCanvas.width = videoPreview.videoWidth;
+    overlayCanvas.height = videoPreview.videoHeight;
+    const ctx = overlayCanvas.getContext('2d');
+    ctx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
+    applyWatermarkPattern(overlayCanvas, watermarkTextInput.value);
+  }
+  requestAnimationFrame(updateOverlay);
+}
+
+// Iniciamos la actualización del overlay
+updateOverlay();
+
+// Actualizamos las variables sin re-renderizar directamente (ya lo hace el overlay)
+colorPicker.addEventListener('input', () => {
+  watermarkColor = colorPicker.value;
+});
+opacityRange.addEventListener('input', () => {
+  watermarkOpacity = parseFloat(opacityRange.value);
+});
 
 // ============ Función para Reducir Saturación ============
 function reduceSaturation(ctx, width, height, factor) {
@@ -31,9 +67,8 @@ function reduceSaturation(ctx, width, height, factor) {
   ctx.putImageData(imageData, 0, 0);
 }
 
-// ============ Parámetros y Funciones para la Marca de Agua ============
+// ============ Funciones para la Marca de Agua ============
 const tileFont = "15px cursive";
-const watermarkOpacity = 0.15;
 
 function drawTextOnSineCurve(ctx, text, startX, baseY, amplitude, period) {
   let x = startX;
@@ -64,20 +99,18 @@ function generateWatermarkTile(text, canvasWidth, canvasHeight) {
   ctx.font = tileFont;
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-
-  const gradient = ctx.createLinearGradient(0, 0, canvasWidth, 0);
-  gradient.addColorStop(0, "#C93B9D");
-  gradient.addColorStop(1, "#77CCA4");
-  ctx.fillStyle = gradient;
+  // Usamos el color seleccionado
+  ctx.fillStyle = watermarkColor;
 
   ctx.save();
   ctx.translate(canvasWidth / 2, canvasHeight / 2);
   ctx.rotate(-Math.PI / 4);
 
+  // Se reduce el espacio horizontal y se aumenta ligeramente la ondulación
   const textWidth = ctx.measureText(decoratedText).width;
-  const horizontalSpacing = 20;
+  const horizontalSpacing = 10;  // antes era 20
   const verticalSpacing = 20;
-  const amplitude = 10;
+  const amplitude = 12;          // antes era 10
   const period = 30;
 
   for (let offsetY = -canvasHeight; offsetY < canvasHeight; offsetY += verticalSpacing) {
@@ -101,7 +134,7 @@ function applyWatermarkPattern(mainCanvas, text) {
   ctx.restore();
 }
 
-// ============ Manejo de Botones y Procesamiento de Archivos ============
+// ============ Manejo de Botones y Archivos ============
 uploadBtn.addEventListener('click', () => {
   fileInput.click();
 });
@@ -115,7 +148,7 @@ fileInput.addEventListener('change', () => {
 cameraBtn.addEventListener('click', () => {
   cameraSection.style.display = 'block';
   previewSection.style.display = 'none';
-  // Se solicita la cámara trasera mediante la restricción facingMode: "environment"
+  // Se solicita la cámara trasera (facingMode: "environment")
   navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
     .then(stream => {
       cameraStream = stream;
@@ -149,6 +182,7 @@ retakeBtn.addEventListener('click', () => {
   const ctx = previewCanvas.getContext('2d');
   ctx.clearRect(0, 0, previewCanvas.width, previewCanvas.height);
   previewSection.style.display = 'none';
+  currentImg = null;
 });
 
 shareBtn.addEventListener('click', async () => {
@@ -214,6 +248,7 @@ function processFile(file) {
     reader.onload = (e) => {
       const img = new Image();
       img.onload = () => {
+        currentImg = img;
         const canvas = previewCanvas;
         canvas.width = img.width;
         canvas.height = img.height;
