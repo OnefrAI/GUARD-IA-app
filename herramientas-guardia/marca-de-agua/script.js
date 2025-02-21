@@ -10,7 +10,7 @@ const retakeBtn = document.getElementById('retakeBtn');
 const shareBtn = document.getElementById('shareBtn');
 const downloadLink = document.getElementById('downloadLink');
 const watermarkTextInput = document.getElementById('watermarkText');
-const infoBtn = document.getElementById('infoBtn');
+const infoBtn = document.getElementById('infoBtn'); // Se elimina el uso del botón info
 const infoModal = document.getElementById('infoModal');
 const closeModal = document.getElementById('closeModal');
 
@@ -39,7 +39,6 @@ function updateOverlay() {
     ctx.clearRect(0, 0, overlayCanvas.width, overlayCanvas.height);
     applyWatermarkPattern(overlayCanvas, watermarkTextInput.value);
   }
-  // Forzar actualización cada 50ms
   setTimeout(() => requestAnimationFrame(updateOverlay), 50);
 }
 updateOverlay();
@@ -132,7 +131,7 @@ function applyWatermarkPattern(mainCanvas, text) {
 
 // ============ Manejo de Botones y Archivos ============
 
-// Usamos el mismo botón "cameraBtn" para iniciar la cámara y capturar la imagen
+// Usamos el mismo botón "cameraBtn" para iniciar la cámara y capturar
 cameraBtn.addEventListener('click', () => {
   if (!cameraActive) {
     // Abrir cámara
@@ -277,9 +276,4 @@ function processFile(file) {
 }
 
 // ============ Modal de Información ============
-infoBtn.addEventListener('click', () => {
-  infoModal.classList.remove('hidden');
-});
-closeModal.addEventListener('click', () => {
-  infoModal.classList.add('hidden');
-});
+/* Se han eliminado los eventos del botón info, ya que se ha quitado */
