@@ -28,6 +28,7 @@
 
     <div class="buttons">
       <button id="uploadBtn" class="btn">Subir Documento</button>
+      <!-- Usamos el mismo botón para iniciar la cámara y capturar la foto -->
       <button id="cameraBtn" class="btn">Tomar Foto</button>
     </div>
     <input type="file" id="fileInput" accept="application/pdf,image/*">
@@ -39,8 +40,6 @@
         <!-- Canvas superpuesto para visualizar la marca de agua en tiempo real -->
         <canvas id="overlayCanvas"></canvas>
       </div>
-      <br>
-      <button id="captureBtn" class="btn capture-btn">📸 Capturar</button>
     </div>
     
     <!-- Vista previa (resultado final) -->
@@ -77,6 +76,8 @@
     </div>
   </div>
   
+  <!-- Polyfill para WebRTC (para mayor compatibilidad) -->
+  <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
