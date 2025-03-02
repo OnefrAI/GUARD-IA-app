@@ -5,13 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bloc de Notas Policial</title>
   <link rel="stylesheet" href="styles.css">
-  <!-- Incluir Tesseract.js para OCR -->
-  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@v2.1.5/dist/tesseract.min.js"></script>
 </head>
 <body>
   <div class="container">
     <h1>Bloc de Notas</h1>
     <form id="noteForm">
+      <!-- Campo "Lugar de intervención" movido al inicio -->
+      <label for="interventionLocation">Lugar de intervención:</label>
+      <input type="text" id="interventionLocation" name="interventionLocation">
+
       <label for="documentNumber">Número de Documento:</label>
       <input type="text" id="documentNumber" name="documentNumber">
 
@@ -31,27 +33,27 @@
       <input type="tel" id="phone" name="phone">
 
       <label for="facts">Exposición de los hechos:</label>
-      <textarea id="facts" name="facts" rows="4"></textarea>
+      <textarea id="facts" name="facts" rows="4" placeholder="Escribe la exposición de los hechos..."></textarea>
 
       <div class="button-container">
-         <!-- Botón azul para activar la cámara (25% del ancho) -->
-         <button type="button" id="activateCameraButton" class="btn activate-camera-btn">📷</button>
-         <!-- Botón amarillo para guardar la nota (75% del ancho) -->
-         <button type="submit" id="saveNoteButton" class="btn save-btn">Guardar Nota</button>
+        <!-- Botón azul para activar la cámara (25% del ancho) -->
+        <button type="button" id="activateCameraButton" class="btn activate-camera-btn">📷</button>
+        <!-- Botón amarillo para guardar la nota (75% del ancho) -->
+        <button type="submit" id="saveNoteButton" class="btn save-btn">Guardar Nota</button>
       </div>
-      
+
       <!-- Contenedor para el video de la cámara -->
       <div id="videoContainer">
         <video id="video" autoplay></video>
         <!-- Botón circular para capturar foto -->
         <button type="button" id="capturePhotoButton">📸</button>
       </div>
-      
+
       <!-- Vista previa de la foto capturada -->
       <div id="photoPreviewContainer" style="display: none;">
         <img id="photoPreview" src="" alt="Foto capturada">
       </div>
-      
+
       <!-- Contenedor para acciones sobre la foto (Rehacer y Eliminar) -->
       <div id="photoActions">
         <button type="button" id="retakePhotoButton" class="btn retake-btn">Rehacer Foto</button>
@@ -59,7 +61,11 @@
       </div>
     </form>
 
+    <!-- Contenedor para mostrar las notas guardadas -->
     <div id="notesContainer"></div>
+
+    <!-- Botón verde para generar el informe acumulado -->
+    <button id="generateReportButton" class="btn report-btn">Generar Informe</button>
   </div>
 
   <script src="script.js"></script>
