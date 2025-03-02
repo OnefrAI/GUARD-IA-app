@@ -110,9 +110,9 @@
       box-shadow: var(--button-shadow);
       z-index: 103;
     }
-    /* Estilo para el footer de contacto */
+    /* Footer de contacto */
     footer {
-      margin-top: 40px;
+      margin-top: 20px;
       padding: 20px;
     }
     footer p {
@@ -182,17 +182,18 @@
     @media (max-width: 600px) {
       .container {
         height: 100vh;
-        justify-content: space-between;
+        justify-content: flex-start;
         padding: 10px 5%;
       }
       .title {
         font-size: 24px;
-        margin-bottom: 10px;
+        margin-bottom: 5px;
       }
       .button-container {
         gap: 10px;
         width: 100%;
         max-width: none;
+        margin-top: 5px;
       }
       .button {
         font-size: 16px;
@@ -214,10 +215,10 @@
   </style>
 </head>
 <body>
-  <!-- ===================== HTML ===================== -->
   <div class="container">
-    <!-- Título actualizado -->
+    <!-- Título -->
     <h1 class="title">Herramientas<br>GUARD-IA 🛡</h1>
+    <!-- Botones principales -->
     <div class="button-container">
       <div class="button-wrapper">
         <a href="https://chatgpt.com/g/g-6766e58171cc81918eb92f23b79f66ae-guard-ia" class="button" target="_blank" aria-label="ChatGPT GUARD-IA">
@@ -246,15 +247,15 @@
     </div>
   </div>
 
-  <!-- Botón de información en la parte superior derecha -->
+  <!-- Botón de info en la esquina superior derecha -->
   <div class="info-icon" tabindex="0" aria-label="Información general" onclick="showModal('Información', 'Esta herramienta no almacena información en servidores. Toda la información se guarda localmente en tu dispositivo y puede eliminarse cuando lo decidas, garantizando tu privacidad.')">i</div>
 
-  <!-- Footer de contacto con únicamente el handle de Telegram -->
+  <!-- Footer de contacto -->
   <footer>
     <p>Contacta con el creador: <a href="https://t.me/OnefraGT" target="_blank">@OnefraGT</a></p>
   </footer>
 
-  <!-- Modal overlay para popups de información -->
+  <!-- Modal overlay para información -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
       <button class="close-modal" onclick="closeModal()" aria-label="Cerrar modal">✖</button>
@@ -262,8 +263,7 @@
       <p id="modalText">Texto de información</p>
     </div>
   </div>
-  
-  <!-- ===================== JavaScript ===================== -->
+
   <script>
     function showModal(title, text) {
       document.getElementById("modalTitle").innerText = title;
