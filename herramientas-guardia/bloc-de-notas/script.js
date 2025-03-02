@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const photoActions = document.getElementById('photoActions');
   const retakePhotoButton = document.getElementById('retakePhotoButton');
   const deletePhotoButton = document.getElementById('deletePhotoButton');
+  const generateReportButton = document.getElementById('generateReportButton');
+  const factsTextArea = document.getElementById('facts');
 
   let cameraStream = null;
   let tempPhotoData = '';
@@ -33,36 +35,17 @@ document.addEventListener('DOMContentLoaded', () => {
       });
   }
 
-  // Función de preprocesamiento de imagen para mejorar el OCR
-  function preprocessImage(canvas) {
-    const context = canvas.getContext('2d');
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const data = imageData.data;
-    const threshold = 128; // Umbral: ajusta según sea necesario
-
-    for (let i = 0; i < data.length; i += 4) {
-      const r = data[i];
-      const g = data[i + 1];
-      const b = data[i + 2];
-      const gray = 0.299 * r + 0.587 * g + 0.114 * b;
-      const binary = gray > threshold ? 255 : 0;
-      data[i] = data[i + 1] = data[i + 2] = binary;
-    }
-    context.putImageData(imageData, 0, 0);
-    return canvas.toDataURL('image/png');
-  }
-
-  // Capturar foto al pulsar el botón circular
+  // Capturar foto con filtro para atenuar brillos (en color)
   function capturePhoto() {
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
     const context = canvas.getContext('2d');
-    context.filter = 'grayscale(100%) contrast(150%)';
+    // Aplicar un filtro que atenúa brillo y saturación sin convertir a blanco y negro
+    context.filter = 'brightness(0.9) saturate(0.9)';
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    // Preprocesar imagen para OCR
-    tempPhotoData = preprocessImage(canvas);
+    tempPhotoData = canvas.toDataURL('image/png');
 
     photoPreview.src = tempPhotoData;
     photoPreviewContainer.style.display = 'block';
@@ -72,16 +55,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Detener la cámara
     stopCamera();
-
-    // Procesar imagen con OCR
-    Tesseract.recognize(tempPhotoData, 'spa', { logger: m => console.log(m) })
-      .then(({ data: { text } }) => {
-        console.log("Resultado OCR:", text);
-        autoCompletarCampos(text);
-      })
-      .catch(err => {
-        console.error("Error en OCR:", err);
-      });
   }
 
   // Detener la cámara
@@ -102,7 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Evento para el botón circular de capturar foto
+  // Evento para capturar la foto
   capturePhotoButton.addEventListener('click', () => {
     capturePhoto();
   });
@@ -125,20 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Función para autocompletar campos usando OCR
-  function autoCompletarCampos(ocrText) {
-    const docMatch = ocrText.match(/\d{8,}/);
-    if (docMatch) {
-      document.getElementById('documentNumber').value = docMatch[0];
-    }
-    const nameMatch = ocrText.match(/([A-Z]{2,}\s+[A-Z]{2,}(?:\s+[A-Z]{2,})?)/);
-    if (nameMatch) {
-      document.getElementById('fullName').value = nameMatch[0];
-    }
-    // Más lógica de extracción según formato del documento
-  }
-
-  // Guardar la nota
+  // Guardar la nota, incluyendo el campo "Lugar de intervención"
   noteForm.addEventListener('submit', (e) => {
     e.preventDefault();
     saveNote();
@@ -146,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function saveNote() {
     const noteData = {
+      interventionLocation: document.getElementById('interventionLocation').value,
       documentNumber: document.getElementById('documentNumber').value,
       fullName: document.getElementById('fullName').value,
       birthdate: document.getElementById('birthdate').value,
@@ -171,61 +132,33 @@ document.addEventListener('DOMContentLoaded', () => {
     lastSavedNote = noteData;
   }
 
-  // Compartir nota usando la Web Share API, incluyendo la foto si está disponible
+  // Compartir nota usando la Web Share API (solo texto en este ejemplo)
   function shareNote(noteData) {
     const shareText = `Nota Policial:
 Documento: ${noteData.documentNumber || 'N/A'}
 Nombre: ${noteData.fullName || 'N/A'}
 Fecha de Nacimiento: ${noteData.birthdate || 'N/A'}
 Padres: ${noteData.parentsName || 'N/A'}
-Domicilio: ${noteData.address || 'N/A'}
+Dirección: ${noteData.address || 'N/A'}
 Teléfono: ${noteData.phone || 'N/A'}
+Lugar de Intervención: ${noteData.interventionLocation || 'N/A'}
 Hechos: ${noteData.facts || 'N/A'}`;
     
-    if (noteData.photoUrl) {
-      // Convertir dataURL a Blob y luego a File
-      fetch(noteData.photoUrl)
-        .then(res => res.blob())
-        .then(blob => {
-          const file = new File([blob], 'nota.png', { type: 'image/png' });
-          if (navigator.canShare && navigator.canShare({ files: [file] })) {
-            navigator.share({
-              title: 'Nota Policial',
-              text: shareText,
-              files: [file]
-            }).then(() => {
-              console.log('Nota compartida exitosamente.');
-            }).catch(err => {
-              console.error('Error al compartir:', err);
-            });
-          } else {
-            // Fallback a compartir solo texto
-            navigator.share({
-              title: 'Nota Policial',
-              text: shareText
-            }).then(() => {
-              console.log('Nota compartida exitosamente.');
-            }).catch(err => {
-              console.error('Error al compartir:', err);
-            });
-          }
-        });
+    if (navigator.share) {
+      navigator.share({
+        title: 'Nota Policial',
+        text: shareText
+      }).then(() => {
+        console.log('Nota compartida exitosamente.');
+      }).catch(err => {
+        console.error('Error al compartir:', err);
+      });
     } else {
-      if (navigator.share) {
-        navigator.share({
-          title: 'Nota Policial',
-          text: shareText
-        }).then(() => {
-          console.log('Nota compartida exitosamente.');
-        }).catch(err => {
-          console.error('Error al compartir:', err);
-        });
-      } else {
-        alert("Tu navegador no soporta la función de compartir.");
-      }
+      alert("Tu navegador no soporta la función de compartir.");
     }
   }
 
+  // Mostrar notas guardadas en pantalla
   function displayNotes() {
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     if (notes.length === 0) {
@@ -234,6 +167,7 @@ Hechos: ${noteData.facts || 'N/A'}`;
     }
     notesContainer.innerHTML = notes.map((note, index) => `
       <div class="note">
+        <p><strong>Lugar de Intervención:</strong> ${note.interventionLocation || 'N/A'}</p>
         <p><strong>Documento:</strong> ${note.documentNumber || 'N/A'}</p>
         <p><strong>Nombre:</strong> ${note.fullName || 'N/A'}</p>
         <p><strong>Fecha de nacimiento:</strong> ${note.birthdate || 'N/A'}</p>
@@ -263,6 +197,36 @@ Hechos: ${noteData.facts || 'N/A'}`;
       shareNote(notes[index]);
     }
   };
+
+  // Función para generar el informe en formato de texto legible
+  generateReportButton.addEventListener('click', generateReport);
+
+  function generateReport() {
+    const notes = JSON.parse(localStorage.getItem('notes')) || [];
+    let reportText = 'Informe de Intervenciones\n\n';
+    
+    notes.forEach((note, index) => {
+      reportText += `Intervención ${index + 1}\n`;
+      reportText += '---------------------------------\n';
+      reportText += `Lugar de Intervención: ${note.interventionLocation || 'N/A'}\n`;
+      reportText += `Documento: ${note.documentNumber || 'N/A'}\n`;
+      reportText += `Nombre: ${note.fullName || 'N/A'}\n`;
+      reportText += `Fecha de Nacimiento: ${note.birthdate || 'N/A'}\n`;
+      reportText += `Padres: ${note.parentsName || 'N/A'}\n`;
+      reportText += `Dirección: ${note.address || 'N/A'}\n`;
+      reportText += `Teléfono: ${note.phone || 'N/A'}\n`;
+      reportText += `Hechos: ${note.facts || 'N/A'}\n`;
+      reportText += '---------------------------------\n\n';
+    });
+    
+    const blob = new Blob([reportText], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'informe_intervenciones.txt';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
 
   displayNotes();
 });
