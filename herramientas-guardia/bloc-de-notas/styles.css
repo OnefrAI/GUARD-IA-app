@@ -180,7 +180,7 @@ input, textarea {
 /* Botón para capturar la foto: circular, sin texto, con icono */
 #capturePhotoButton {
   position: absolute;
-  bottom: 20px; /* Se sube de 10px a 20px */
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   background-color: rgba(255, 255, 255, 0.3);
@@ -204,6 +204,24 @@ input, textarea {
 #videoContainer {
   position: relative;
   display: none;
+}
+
+/* Botón de informe (verde) */
+.btn.report-btn {
+  background-color: #28a745;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  margin-top: 15px;
+  width: 100%;
+}
+.btn.report-btn:hover {
+  background-color: #218838;
 }
 
 /* Responsividad */
