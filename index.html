@@ -29,16 +29,12 @@
       padding: 0;
     }
     .container {
+      /* Para evitar que se pierda contenido en móviles, se alinea hacia arriba */
+      min-height: 100vh;
+      padding-top: 40px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      height: 100vh;
-      animation: fadeIn 1s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
     }
     .title {
       font-size: 32px;
@@ -52,6 +48,7 @@
       gap: 20px;
       width: 80%;
       max-width: 400px;
+      margin-bottom: 40px;
     }
     .button-wrapper {
       position: relative;
@@ -97,10 +94,10 @@
     .button-info:focus {
       outline: 2px solid var(--primary-color);
     }
-    /* Movemos el botón de info global un poco hacia arriba */
+    /* Botón de información en la parte superior derecha */
     .info-icon {
       position: fixed;
-      bottom: 80px;
+      top: 20px;
       right: 20px;
       background-color: var(--primary-color);
       width: 40px;
@@ -113,6 +110,21 @@
       font-size: 20px;
       box-shadow: var(--button-shadow);
       z-index: 103;
+    }
+    /* Estilo para el footer de contacto */
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+    }
+    footer p {
+      font-size: 16px;
+    }
+    footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+    }
+    footer a:hover {
+      text-decoration: underline;
     }
     /* Modal overlay */
     .modal-overlay {
@@ -167,25 +179,7 @@
     .modal button.close-modal:hover {
       background-color: #0056b3;
     }
-    .footer {
-      position: fixed;
-      bottom: 20px;
-      width: 100%;
-      text-align: center;
-      font-size: 14px;
-      color: var(--text-color);
-      z-index: 102;
-      line-height: 1.4;
-    }
-    .footer a {
-      color: var(--link-color);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    .footer a:hover {
-      color: #66b3ff;
-    }
-    /* Responsive para pantallas pequeñas */
+    /* Responsive adjustments */
     @media (max-width: 600px) {
       .title {
         font-size: 28px;
@@ -194,13 +188,20 @@
         font-size: 16px;
         padding: 12px 20px;
       }
+      .button-container {
+        gap: 10px;
+      }
+      .container {
+        align-items: flex-start;
+        padding-top: 20px;
+      }
     }
   </style>
 </head>
 <body>
   <!-- ===================== HTML ===================== -->
   <div class="container">
-    <!-- Se ha actualizado el título para quitar el coche y dejar solo el escudo -->
+    <!-- Título actualizado -->
     <h1 class="title">Herramientas<br>GUARD-IA 🛡</h1>
     <div class="button-container">
       <div class="button-wrapper">
@@ -230,8 +231,13 @@
     </div>
   </div>
 
-  <!-- Icono de información global -->
+  <!-- Botón de información en la parte superior derecha -->
   <div class="info-icon" tabindex="0" aria-label="Información general" onclick="showModal('Información', 'Esta herramienta no almacena información en servidores. Toda la información se guarda localmente en tu dispositivo y puede eliminarse cuando lo decidas, garantizando tu privacidad.')">i</div>
+
+  <!-- Footer de contacto con únicamente el handle de Telegram -->
+  <footer>
+    <p>Contacta con el creador: <a href="https://t.me/OnefraGT" target="_blank">@OnefraGT</a></p>
+  </footer>
 
   <!-- Modal overlay para popups de información -->
   <div class="modal-overlay" id="modalOverlay">
@@ -242,11 +248,6 @@
     </div>
   </div>
   
-  <!-- Footer de contacto en dos líneas -->
-  <div class="footer">
-    📩 Contacto con el creador<br> de la herramienta <a href="https://t.me/OnefraGT" target="_blank" aria-label="Contacto con el creador de la herramienta">@OnefraGT</a>
-  </div>
-
   <!-- ===================== JavaScript ===================== -->
   <script>
     function showModal(title, text) {
@@ -254,11 +255,9 @@
       document.getElementById("modalText").innerText = text;
       document.getElementById("modalOverlay").style.display = "flex";
     }
-
     function closeModal() {
       document.getElementById("modalOverlay").style.display = "none";
     }
-
     function showButtonInfo(element) {
       const title = element.getAttribute("data-title");
       const text = element.getAttribute("data-text");
