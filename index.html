@@ -6,8 +6,30 @@
   <title>Herramientas GUARD-IA</title>
   <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    /* Estilos base para el gradiente y la web */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Canva Sans", Arial, Helvetica, sans-serif;
+      background-color: #000000;
+    }
+    /* Gradiente dinámico */
+    #gradient {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 800px;
+      z-index: 0;
+      padding: 0;
+      margin: 0;
+    }
+    /* Estilos de Herramientas GUARD-IA */
     :root {
       --bg-color: #121212;
       --bg-gradient-start: #1a2980;
@@ -20,22 +42,6 @@
       --button-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       --modal-bg: rgba(0, 0, 0, 0.8);
     }
-    /* Fondo animado */
-    body {
-      background: linear-gradient(135deg, var(--bg-gradient-start), var(--bg-gradient-end));
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: var(--text-color);
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      min-height: 100vh;
-    }
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
     .container {
       min-height: 100vh;
       padding-top: 40px;
@@ -43,13 +49,14 @@
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
+      position: relative;
+      z-index: 5;
     }
     .title {
       font-size: 32px;
       margin-bottom: 20px;
       line-height: 1.2;
       font-weight: 600;
-      color: var(--text-color);
       text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
       background: linear-gradient(45deg, #fff, #f0f0f0);
       -webkit-background-clip: text;
@@ -141,11 +148,6 @@
       background-color: rgba(0, 0, 0, 0.8);
       transform: scale(1.1);
     }
-    .button-info:focus {
-      outline: none;
-      box-shadow: 0 0 0 2px var(--primary-color);
-    }
-    /* Botón de info en la parte superior derecha */
     .info-icon {
       position: fixed;
       top: 20px;
@@ -173,7 +175,6 @@
       background-color: #2980b9;
       transform: scale(1.1);
     }
-    /* Footer de contacto */
     footer {
       margin-top: auto;
       padding: 20px;
@@ -181,10 +182,10 @@
       color: #ddd;
       background-color: rgba(0, 0, 0, 0.3);
       border-top: 1px solid rgba(255, 255, 255, 0.1);
+      position: relative;
+      z-index: 5;
     }
-    footer p {
-      font-size: 16px;
-    }
+    footer p { font-size: 16px; }
     footer a {
       color: var(--primary-color);
       text-decoration: none;
@@ -194,7 +195,6 @@
       text-decoration: underline;
       color: #fff;
     }
-    /* Modal overlay y modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -207,9 +207,7 @@
       justify-content: center;
       animation: fadeInModal 0.3s ease-in-out;
     }
-    .modal-overlay.active {
-      display: flex;
-    }
+    .modal-overlay.active { display: flex; }
     @keyframes fadeInModal {
       from { opacity: 0; }
       to { opacity: 1; }
@@ -261,65 +259,30 @@
       background-color: #2980b9;
       transform: scale(1.05);
     }
-    /* Responsive adjustments para móviles */
+    /* Responsive para móviles */
     @media (max-width: 600px) {
-      .container {
-        height: 100vh;
-        justify-content: flex-start;
-        padding: 10px 5%;
-      }
-      .title {
-        font-size: 28px;
-        margin-bottom: 20px;
-      }
-      .button-container {
-        gap: 15px;
-        width: 100%;
-      }
-      .button {
-        font-size: 16px;
-        padding: 12px 20px;
-      }
-      .button i {
-        font-size: 18px;
-      }
-      .button-info {
-        width: 30px;
-        height: 30px;
-        font-size: 14px;
-      }
-      .info-icon {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-        top: 10px;
-        right: 10px;
-      }
-      .modal {
-        padding: 15px 20px;
-      }
-      .modal h2 {
-        font-size: 22px;
-      }
-      .modal p {
-        font-size: 15px;
-      }
-      .modal button.close-modal {
-        font-size: 15px;
-        padding: 8px 14px;
-      }
-      footer {
-        padding: 15px 5%;
-        font-size: 14px;
-      }
+      .container { height: 100vh; justify-content: flex-start; padding: 10px 5%; }
+      .title { font-size: 28px; margin-bottom: 20px; }
+      .button-container { gap: 15px; width: 100%; }
+      .button { font-size: 16px; padding: 12px 20px; }
+      .button i { font-size: 18px; }
+      .button-info { width: 30px; height: 30px; font-size: 14px; }
+      .info-icon { width: 40px; height: 40px; font-size: 20px; top: 10px; right: 10px; }
+      .modal { padding: 15px 20px; }
+      .modal h2 { font-size: 22px; }
+      .modal p { font-size: 15px; }
+      .modal button.close-modal { font-size: 15px; padding: 8px 14px; }
+      footer { padding: 15px 5%; font-size: 14px; }
     }
   </style>
 </head>
 <body>
+  <!-- Fondo del gradiente dinámico -->
+  <div id="gradient"></div>
+  
+  <!-- Contenido principal -->
   <div class="container">
-    <!-- Título -->
     <h1 class="title">Herramientas<br>GUARD-IA</h1>
-    <!-- Botones principales -->
     <div class="button-container">
       <div class="button-wrapper">
         <a href="https://chatgpt.com/g/g-6766e58171cc81918eb92f23b79f66ae-guard-ia" class="button" target="_blank" aria-label="ChatGPT GUARD-IA">
@@ -340,20 +303,25 @@
         <span class="button-info" data-title="Bloc de Notas" data-text="Accederás a un bloc de notas digital. La información se almacena únicamente en tu dispositivo, permitiéndote guardar o compartir el contenido sin enviarlo a servidores." tabindex="0" aria-label="Más información sobre Bloc de Notas" onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
-        <a href="herramientas-guardia/marca-de-agua/index.html" class="button" target="_self" aria-label="Marca de Agua">
-          <i class="fas fa-tint"></i> Marca de Agua
+        <a href="https://saferlayer.com/" class="button" target="_blank" aria-label="Marca de agua by Saferlayer">
+          <i class="fas fa-tint"></i> Marca de agua by Saferlayer
         </a>
-        <span class="button-info" data-title="Marca de Agua" data-text="Añade una marca de agua a tus imágenes para proteger tus derechos de autor o personalizar tus fotos." tabindex="0" aria-label="Más información sobre Marca de Agua" onclick="showButtonInfo(this)">i</span>
+        <span class="button-info" data-title="Marca de agua by Saferlayer" data-text="Al hacer clic, serás redirigido a la web https://saferlayer.com/" tabindex="0" aria-label="Más información sobre Marca de agua by Saferlayer" onclick="showButtonInfo(this)">i</span>
       </div>
     </div>
   </div>
-  <!-- Ícono de info en la esquina superior derecha -->
-  <div class="info-icon" tabindex="0" aria-label="Información general" onclick="showModal('Información', 'Esta herramienta no almacena información en servidores. Toda la información se guarda localmente en tu dispositivo y puede eliminarse cuando lo decidas, garantizando tu privacidad.')"><i class="fas fa-info"></i></div>
-  <!-- Footer de contacto -->
+  
+  <!-- Ícono de información -->
+  <div class="info-icon" tabindex="0" aria-label="Información general" onclick="showModal('Información', 'Esta herramienta no almacena información en servidores. Toda la información se guarda localmente en tu dispositivo y puede eliminarse cuando lo decidas, garantizando tu privacidad.')">
+    <i class="fas fa-info"></i>
+  </div>
+  
+  <!-- Footer -->
   <footer>
     <p>Contacta con el creador: <a href="https://t.me/OnefraGT" target="_blank">@OnefraGT</a></p>
   </footer>
-  <!-- Modal overlay para información -->
+  
+  <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay">
     <div class="modal">
       <button class="close-modal" onclick="closeModal()" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
@@ -361,7 +329,54 @@
       <p id="modalText">Texto de información</p>
     </div>
   </div>
+  
+  <!-- jQuery (para el gradiente) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
   <script>
+    // Código para el gradiente dinámico
+    var colors = [
+      [62,35,255],
+      [60,255,60],
+      [255,35,98],
+      [45,175,230],
+      [255,0,255],
+      [255,128,0]
+    ];
+    var step = 0;
+    var colorIndices = [0,1,2,3];
+    var gradientSpeed = 0.002;
+    function updateGradient() {
+      if (typeof $ === "undefined") return;
+      var c0_0 = colors[colorIndices[0]];
+      var c0_1 = colors[colorIndices[1]];
+      var c1_0 = colors[colorIndices[2]];
+      var c1_1 = colors[colorIndices[3]];
+      var istep = 1 - step;
+      var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+      var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+      var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+      var color1 = "rgb("+r1+","+g1+","+b1+")";
+      var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+      var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+      var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+      var color2 = "rgb("+r2+","+g2+","+b2+")";
+      $('#gradient').css({
+        background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"
+      }).css({
+        background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"
+      });
+      step += gradientSpeed;
+      if (step >= 1) {
+        step %= 1;
+        colorIndices[0] = colorIndices[1];
+        colorIndices[2] = colorIndices[3];
+        colorIndices[1] = (colorIndices[1] + Math.floor(1 + Math.random() * (colors.length - 1))) % colors.length;
+        colorIndices[3] = (colorIndices[3] + Math.floor(1 + Math.random() * (colors.length - 1))) % colors.length;
+      }
+    }
+    setInterval(updateGradient, 10);
+    
+    // Funciones para el modal de información
     function showModal(title, text) {
       document.getElementById("modalTitle").innerText = title;
       document.getElementById("modalText").innerText = text;
@@ -371,8 +386,8 @@
       document.getElementById("modalOverlay").classList.remove("active");
     }
     function showButtonInfo(element) {
-      const title = element.getAttribute("data-title");
-      const text = element.getAttribute("data-text");
+      var title = element.getAttribute("data-title");
+      var text = element.getAttribute("data-text");
       showModal(title, text);
     }
   </script>
