@@ -1,99 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
   const noteForm = document.getElementById('noteForm');
   const notesContainer = document.getElementById('notesContainer');
-  const activateCameraButton = document.getElementById('activateCameraButton');
-  const saveNoteButton = document.getElementById('saveNoteButton');
-  const videoContainer = document.getElementById('videoContainer');
-  const video = document.getElementById('video');
-  const capturePhotoButton = document.getElementById('capturePhotoButton');
-  const photoPreviewContainer = document.getElementById('photoPreviewContainer');
-  const photoPreview = document.getElementById('photoPreview');
-  const photoActions = document.querySelector('.photo-actions');
-  const retakePhotoButton = document.getElementById('retakePhotoButton');
-  const deletePhotoButton = document.getElementById('deletePhotoButton');
   const generateReportButton = document.getElementById('generateReportButton');
-  const factsTextArea = document.getElementById('facts');
 
-  let cameraStream = null;
-  let tempPhotoData = '';
   let lastSavedNote = null;
 
-  // Iniciar la cámara
-  function startCamera() {
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
-      .then(stream => {
-        cameraStream = stream;
-        video.srcObject = stream;
-        video.play();
-        videoContainer.classList.remove('hidden');
-        capturePhotoButton.style.display = 'block';
-        activateCameraButton.classList.add('hidden');
-      })
-      .catch(err => {
-        console.error("Error al acceder a la cámara:", err);
-        alert("No se pudo acceder a la cámara. Asegúrate de haber otorgado permisos.");
-      });
-  }
-
-  // Capturar foto con filtro para atenuar brillos (en color)
-  function capturePhoto() {
-    const canvas = document.createElement('canvas');
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    const context = canvas.getContext('2d');
-    // Aplicar un filtro que atenúa brillo y saturación sin convertir a blanco y negro
-    context.filter = 'brightness(0.9) saturate(0.9)';
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    tempPhotoData = canvas.toDataURL('image/png');
-
-    photoPreview.src = tempPhotoData;
-    photoPreviewContainer.classList.remove('hidden');
-    videoContainer.classList.add('hidden');
-    capturePhotoButton.style.display = 'none';
-    if (photoActions) {
-      photoActions.classList.remove('hidden');
-    }
-
-    // Detener la cámara
-    stopCamera();
-  }
-
-  // Detener la cámara
-  function stopCamera() {
-    if (cameraStream) {
-      cameraStream.getTracks().forEach(track => track.stop());
-      cameraStream = null;
-    }
-    videoContainer.classList.add('hidden');
-    capturePhotoButton.style.display = 'none';
-    activateCameraButton.classList.remove('hidden');
-  }
-
-  // Eventos de la cámara y foto
-  activateCameraButton.addEventListener('click', () => {
-    if (!cameraStream) startCamera();
-  });
-
-  capturePhotoButton.addEventListener('click', capturePhoto);
-
-  retakePhotoButton.addEventListener('click', () => {
-    tempPhotoData = '';
-    photoPreviewContainer.classList.add('hidden');
-    if (photoActions) photoActions.classList.add('hidden');
-    startCamera();
-  });
-
-  deletePhotoButton.addEventListener('click', () => {
-    if (confirm("¿Estás seguro de eliminar la foto?")) {
-      tempPhotoData = '';
-      photoPreviewContainer.classList.add('hidden');
-      if (photoActions) photoActions.classList.add('hidden');
-      activateCameraButton.classList.remove('hidden');
-    }
-  });
-
-  // Guardar la nota
+  // Guardar la nota (sin funcionalidad de fotografía)
   noteForm.addEventListener('submit', (e) => {
     e.preventDefault();
     saveNote();
@@ -109,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
       address: document.getElementById('address').value,
       phone: document.getElementById('phone').value,
       facts: document.getElementById('facts').value,
-      photoUrl: tempPhotoData
+      photoUrl: '' // Sin fotografía
     };
 
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
@@ -118,16 +30,11 @@ document.addEventListener('DOMContentLoaded', () => {
     displayNotes();
 
     noteForm.reset();
-    tempPhotoData = '';
-    photoPreviewContainer.classList.add('hidden');
-    if (photoActions) photoActions.classList.add('hidden');
-    activateCameraButton.classList.remove('hidden');
     alert("Nota guardada exitosamente.");
-
     lastSavedNote = noteData;
   }
 
-  // Compartir nota usando Web Share API
+  // Compartir nota usando Web Share API (solo texto)
   function shareNote(noteData) {
     const shareText = `Nota Policial:
 Documento: ${noteData.documentNumber || 'N/A'}
@@ -170,9 +77,8 @@ Hechos: ${noteData.facts || 'N/A'}`;
         <p><strong>Dirección:</strong> ${note.address || 'N/A'}</p>
         <p><strong>Teléfono:</strong> ${note.phone || 'N/A'}</p>
         <p><strong>Hechos:</strong> ${note.facts || 'N/A'}</p>
-        ${note.photoUrl ? `<img src="${note.photoUrl}" alt="Foto de la nota">` : ''}
-        <button onclick="deleteNote(${index})">Eliminar</button>
-        <button onclick="shareNoteFromIndex(${index})">Compartir</button>
+        <button class="btn delete-note-btn" onclick="deleteNote(${index})">Eliminar</button>
+        <button class="btn" onclick="shareNoteFromIndex(${index})">Compartir</button>
       </div>
     `).join('');
   }
