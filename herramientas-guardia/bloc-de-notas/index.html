@@ -8,66 +8,119 @@
 </head>
 <body>
   <div class="container">
-    <h1>Bloc de Notas</h1>
+    <div class="header">
+      <svg class="icon-pin" viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+        <circle cx="12" cy="10" r="3"></circle>
+      </svg>
+      <h1>Bloc de Notas Policial</h1>
+    </div>
+    
     <form id="noteForm">
-      <!-- Campo "Lugar de intervención" movido al inicio -->
-      <label for="interventionLocation">Lugar de intervención:</label>
-      <input type="text" id="interventionLocation" name="interventionLocation">
-
-      <label for="documentNumber">Número de Documento:</label>
-      <input type="text" id="documentNumber" name="documentNumber">
-
-      <label for="fullName">Nombre y apellidos:</label>
-      <input type="text" id="fullName" name="fullName">
-
-      <label for="birthdate">Fecha de nacimiento:</label>
-      <input type="text" id="birthdate" name="birthdate" placeholder="DD-MM-AAAA" inputmode="numeric" pattern="[0-9-]*">
-
-      <label for="parentsName">Nombre del padre y la madre:</label>
-      <input type="text" id="parentsName" name="parentsName">
-
-      <label for="address">Dirección del domicilio:</label>
-      <input type="text" id="address" name="address">
-
-      <label for="phone">Número de teléfono:</label>
-      <input type="tel" id="phone" name="phone">
-
-      <label for="facts">Exposición de los hechos:</label>
-      <textarea id="facts" name="facts" rows="4" placeholder="Escribe la exposición de los hechos..."></textarea>
-
+      <div class="form-group primary">
+        <label for="interventionLocation">Lugar de intervención</label>
+        <input type="text" id="interventionLocation" name="interventionLocation" placeholder="Ingrese la ubicación...">
+      </div>
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="documentNumber">Número de Documento</label>
+          <input type="text" id="documentNumber" name="documentNumber">
+        </div>
+        <div class="form-group">
+          <label for="fullName">Nombre y apellidos</label>
+          <input type="text" id="fullName" name="fullName">
+        </div>
+        <div class="form-group">
+          <label for="birthdate">Fecha de nacimiento</label>
+          <input type="date" id="birthdate" name="birthdate">
+        </div>
+        <div class="form-group">
+          <label for="phone">Teléfono</label>
+          <input type="tel" id="phone" name="phone">
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label for="parentsName">Nombre del padre y la madre</label>
+        <input type="text" id="parentsName" name="parentsName">
+      </div>
+      
+      <div class="form-group">
+        <label for="address">Dirección del domicilio</label>
+        <input type="text" id="address" name="address">
+      </div>
+      
+      <div class="form-group">
+        <label for="facts">Exposición de los hechos</label>
+        <textarea id="facts" name="facts" rows="4" placeholder="Describa los hechos..."></textarea>
+      </div>
+      
       <div class="button-container">
-        <!-- Botón azul para activar la cámara (25% del ancho) -->
-        <button type="button" id="activateCameraButton" class="btn activate-camera-btn">📷</button>
-        <!-- Botón amarillo para guardar la nota (75% del ancho) -->
-        <button type="submit" id="saveNoteButton" class="btn save-btn">Guardar Nota</button>
+        <button type="button" id="activateCameraButton" class="btn camera-btn">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+          <span>Cámara</span>
+        </button>
+        <button type="submit" id="saveNoteButton" class="btn save-btn">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+            <polyline points="17 21 17 13 7 13 7 21"></polyline>
+            <polyline points="7 3 7 8 15 8"></polyline>
+          </svg>
+          <span>Guardar Nota</span>
+        </button>
       </div>
-
-      <!-- Contenedor para el video de la cámara -->
-      <div id="videoContainer">
-        <video id="video" autoplay></video>
-        <!-- Botón circular para capturar foto -->
-        <button type="button" id="capturePhotoButton">📸</button>
+      
+      <div id="videoContainer" class="camera-container hidden">
+        <video id="video" autoplay playsinline></video>
+        <button type="button" id="capturePhotoButton" class="capture-btn">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+            <circle cx="12" cy="13" r="4"></circle>
+          </svg>
+        </button>
       </div>
-
-      <!-- Vista previa de la foto capturada -->
-      <div id="photoPreviewContainer" style="display: none;">
+      
+      <div id="photoPreviewContainer" class="photo-preview hidden">
         <img id="photoPreview" src="" alt="Foto capturada">
-      </div>
-
-      <!-- Contenedor para acciones sobre la foto (Rehacer y Eliminar) -->
-      <div id="photoActions">
-        <button type="button" id="retakePhotoButton" class="btn retake-btn">Rehacer Foto</button>
-        <button type="button" id="deletePhotoButton" class="btn delete-btn">Eliminar Foto</button>
+        <div class="photo-actions hidden">
+          <button type="button" id="retakePhotoButton" class="btn action-btn">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+              <path d="M23 4v6h-6"></path>
+              <path d="M1 20v-6h6"></path>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+          </button>
+          <button type="button" id="deletePhotoButton" class="btn action-btn delete">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+        </div>
       </div>
     </form>
-
-    <!-- Contenedor para mostrar las notas guardadas -->
-    <div id="notesContainer"></div>
-
-    <!-- Botón verde para generar el informe acumulado -->
-    <button id="generateReportButton" class="btn report-btn">Generar Informe</button>
+    
+    <div class="notes-section">
+      <div class="notes-header">
+        <h2>Notas Guardadas</h2>
+        <button id="generateReportButton" class="btn report-btn">
+          <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Generar Informe</span>
+        </button>
+      </div>
+      <div id="notesContainer" class="notes-list"></div>
+    </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
