@@ -77,6 +77,24 @@
     .button i {
       font-size: 20px;
     }
+    .button-info {
+      background-color: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      margin-left: 10px;
+      transition: background-color 0.3s, transform 0.3s;
+    }
+    .button-info:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+      transform: scale(1.1);
+    }
     .info-icon {
       position: fixed;
       top: 20px;
@@ -198,6 +216,7 @@
       .title { font-size: 28px; }
       .button-container { width: 100%; }
       .button { font-size: 16px; padding: 12px 20px; }
+      .button-info { width: 20px; height: 20px; font-size: 14px; }
       .info-icon { width: 24px; height: 24px; font-size: 14px; }
       .info-icon::after { font-size: 10px; top: 34px; }
       footer { padding: 15px; }
@@ -213,21 +232,25 @@
         <a href="https://chatgpt.com/g/g-6766e58171cc81918eb92f23b79f66ae-guard-ia" class="button" target="_blank" rel="noopener noreferrer">
           <i class="fas fa-robot"></i> ChatGPT GUARD-IA
         </a>
+        <span class="button-info" data-title="ChatGPT GUARD-IA" data-text="Interactúa con una versión personalizada de ChatGPT diseñada para GUARD-IA." onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
         <a href="herramientas-guardia/calculadora-de-drogas/index.html" class="button" target="_self">
           <i class="fas fa-calculator"></i> Calculadora de Drogas
         </a>
+        <span class="button-info" data-title="Calculadora de Drogas" data-text="Herramienta para cálculos relacionados con drogas. Uso bajo responsabilidad del usuario." onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
         <a href="herramientas-guardia/bloc-de-notas/index.html" class="button" target="_self">
           <i class="fas fa-sticky-note"></i> Bloc de Notas
         </a>
+        <span class="button-info" data-title="Bloc de Notas" data-text="Un bloc de notas digital que guarda tus notas localmente en tu dispositivo." onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
         <a href="https://saferlayer.com/" class="button" target="_blank" rel="noopener noreferrer">
           <i class="fas fa-tint"></i> Marca de agua by Saferlayer
         </a>
+        <span class="button-info" data-title="Marca de agua by Saferlayer" data-text="Herramienta externa para agregar marcas de agua a tus archivos." onclick="showButtonInfo(this)">i</span>
       </div>
     </div>
   </div>
@@ -293,6 +316,12 @@
 
     function closeModal() {
       document.getElementById("modalOverlay").classList.remove("active");
+    }
+
+    function showButtonInfo(element) {
+      var title = element.getAttribute("data-title");
+      var text = element.getAttribute("data-text");
+      showModal(title, text);
     }
 
     function closeModalOnClickOutside(event) {
