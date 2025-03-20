@@ -32,8 +32,9 @@
           <input type="text" id="fullName" name="fullName">
         </div>
         <div class="form-group">
+          <!-- Se cambia de "date" a "text" para que no abra el calendario -->
           <label for="birthdate">Fecha de nacimiento</label>
-          <input type="date" id="birthdate" name="birthdate">
+          <input type="text" id="birthdate" name="birthdate" placeholder="DD-MM-AAAA" inputmode="numeric" pattern="[0-9-]*">
         </div>
         <div class="form-group">
           <label for="phone">Teléfono</label>
