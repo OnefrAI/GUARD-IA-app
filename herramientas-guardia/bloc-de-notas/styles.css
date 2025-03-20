@@ -16,6 +16,7 @@
     box-sizing: border-box;
 }
 
+/* Fondo con gradiente */
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
     background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-bg-secondary) 100%);
@@ -82,6 +83,7 @@ label {
     font-weight: 500;
     color: var(--color-primary);
     margin-bottom: 0.5rem;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
 }
 
 input, textarea {
@@ -95,6 +97,11 @@ input, textarea {
     transition: all 0.2s;
 }
 
+/* Sombreado para el placeholder */
+input::placeholder, textarea::placeholder {
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
 input:focus, textarea:focus {
     outline: none;
     border-color: var(--color-primary);
@@ -106,10 +113,17 @@ textarea {
     min-height: 100px;
 }
 
-.button-container {
+/* Contenedor para los dos botones de acción */
+.action-buttons {
     display: flex;
+    justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.5rem;
+}
+
+.action-buttons .btn {
+    flex: 1;
+    max-width: 48%;
 }
 
 .btn {
@@ -126,103 +140,23 @@ textarea {
     color: var(--color-text);
 }
 
-.camera-btn {
-    background: var(--color-primary);
-    flex: 1;
-}
-
-.camera-btn:hover {
-    background: #2563eb;
-}
-
+/* Botón Guardar Nota */
 .save-btn {
     background: var(--color-secondary);
-    flex: 2;
 }
-
 .save-btn:hover {
     background: #d97706;
 }
 
+/* Botón Generar Informe */
 .report-btn {
     background: var(--color-success);
 }
-
 .report-btn:hover {
     background: #059669;
 }
 
-.camera-container {
-    position: relative;
-    margin-top: 1rem;
-    border-radius: 0.75rem;
-    overflow: hidden;
-    background: var(--color-bg-secondary);
-}
-
-.camera-container video {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-}
-
-.capture-btn {
-    position: absolute;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 50%;
-    background: white;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-.capture-btn svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: var(--color-bg);
-}
-
-.photo-preview {
-    position: relative;
-    margin-top: 1rem;
-}
-
-.photo-preview img {
-    width: 100%;
-    height: 300px;
-    object-fit: cover;
-    border-radius: 0.75rem;
-}
-
-.photo-actions {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    display: flex;
-    gap: 0.5rem;
-}
-
-.action-btn {
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    background: rgba(30, 41, 59, 0.8);
-}
-
-.action-btn.delete {
-    color: var(--color-danger);
-}
-
-.action-btn:hover {
-    background: rgba(30, 41, 59, 0.9);
-}
-
+/* Sección de notas */
 .notes-section {
     margin-top: 2rem;
 }
@@ -252,59 +186,53 @@ textarea {
     border: 1px solid var(--color-border);
 }
 
-.note-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 1rem;
-}
-
-.note-title {
-    font-size: 1.125rem;
+/* Botones en la visualización de cada nota */
+.note button {
+    margin-right: 5px;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
     font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
 }
 
-.note-date {
-    font-size: 0.875rem;
-    color: var(--color-text-secondary);
+/* Botón Compartir (se mantiene) */
+.note button:not(.delete-note-btn) {
+    background: var(--color-primary);
+    color: var(--color-text);
+}
+.note button:not(.delete-note-btn):hover {
+    background: #2563eb;
 }
 
-.note-content {
-    display: grid;
-    gap: 0.5rem;
+/* Botón Eliminar (en rojo) */
+.delete-note-btn {
+    background: var(--color-danger);
+    color: var(--color-text);
+}
+.delete-note-btn:hover {
+    background: #c82333;
 }
 
-.note-field {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.note-label {
-    color: var(--color-primary);
-    font-weight: 500;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Responsividad: aumentar tipografía y elementos en móviles */
+/* Responsividad: aumentar tipografía y aprovechar al máximo la pantalla en móviles */
 @media (max-width: 480px) {
     body {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
     }
     h1 {
         font-size: 2.5rem;
     }
     input, textarea {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         padding: 1rem;
     }
     .btn {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         padding: 1rem 2rem;
     }
     .container {
         padding: 1.5rem;
+        width: 100%;
     }
 }
