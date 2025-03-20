@@ -4,227 +4,146 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Herramientas GUARD-IA</title>
-  <!-- Google Fonts: Poppins -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <!-- FontAwesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" 
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" 
         crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    /* Estilos base para el gradiente y la web */
     body {
       margin: 0;
       padding: 0;
-      font-family: "Canva Sans", Arial, Helvetica, sans-serif;
+      font-family: "Poppins", Arial, sans-serif;
       background-color: #000000;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
-    /* Gradiente dinámico */
     #gradient {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
-      height: 800px;
+      height: 100%;
       z-index: 0;
-      padding: 0;
-      margin: 0;
-    }
-    /* Estilos de Herramientas GUARD-IA */
-    :root {
-      --bg-color: #121212;
-      --bg-gradient-start: #1a2980;
-      --bg-gradient-end: #26d0ce;
-      --primary-color: #3498db;
-      --secondary-color: rgba(44, 62, 80, 0.95);
-      --hover-color: #444;
-      --text-color: #fff;
-      --link-color: #00f;
-      --button-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-      --modal-bg: rgba(0, 0, 0, 0.8);
     }
     .container {
-      min-height: 100vh;
-      padding-top: 40px;
+      flex: 1;
+      padding: 40px 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
       position: relative;
       z-index: 5;
     }
     .title {
       font-size: 32px;
-      margin-bottom: 20px;
-      line-height: 1.2;
+      margin-bottom: 30px;
       font-weight: 600;
+      color: #fff;
       text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
-      background: linear-gradient(45deg, #fff, #f0f0f0);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      animation: floatTitle 3s ease-in-out infinite;
-    }
-    @keyframes floatTitle {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
     }
     .button-container {
       display: flex;
       flex-direction: column;
       gap: 20px;
-      width: 80%;
+      width: 100%;
       max-width: 500px;
-      margin-bottom: 40px;
     }
     .button-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       position: relative;
-      overflow: hidden;
     }
     .button {
-      position: relative;
-      backdrop-filter: blur(5px);
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
       padding: 15px 25px;
       border-radius: 12px;
       text-decoration: none;
-      color: var(--text-color);
+      color: #fff;
       font-size: 18px;
-      transition: transform 0.3s, background-color 0.3s, box-shadow 0.3s;
-      box-shadow: var(--button-shadow);
+      transition: transform 0.3s, background-color 0.3s;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
-      justify-content: center;
       gap: 10px;
-      overflow: hidden;
-      z-index: 1;
-      transform-style: preserve-3d;
-      perspective: 1000px;
+      flex: 1;
     }
     .button:hover {
-      transform: translateY(-5px) rotateX(10deg);
+      transform: translateY(-5px);
       background: rgba(255, 255, 255, 0.2);
-      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
-    }
-    .button::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 12px;
-      background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-    .button:hover::after {
-      opacity: 1;
-      animation: shine 1.5s ease-in-out infinite;
-    }
-    @keyframes shine {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
     }
     .button i {
       font-size: 20px;
-    }
-    .button-info {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      border-radius: 50%;
-      width: 25px;
-      height: 25px;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: background-color 0.3s, transform 0.3s;
-      z-index: 3;
-    }
-    .button-info:hover {
-      background-color: rgba(0, 0, 0, 0.8);
-      transform: scale(1.1);
     }
     .info-icon {
       position: fixed;
       top: 20px;
       right: 20px;
-      background-color: var(--primary-color);
-      width: 45px;
-      height: 45px;
+      background-color: #3498db;
+      width: 30px;
+      height: 30px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      font-size: 22px;
-      box-shadow: var(--button-shadow);
-      z-index: 103;
+      font-size: 16px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      z-index: 10;
       transition: background-color 0.3s, transform 0.3s;
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4); }
-      70% { transform: scale(1.1); box-shadow: 0 0 0 10px rgba(52, 152, 219, 0); }
-      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+      color: #fff;
     }
     .info-icon:hover {
       background-color: #2980b9;
       transform: scale(1.1);
     }
-    footer {
-      margin-top: auto;
-      padding: 20px;
-      text-align: center;
-      color: #ddd;
-      background-color: rgba(0, 0, 0, 0.3);
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      position: relative;
-      z-index: 5;
+    .info-icon::after {
+      content: 'Información general';
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background-color: #fff;
+      color: #000;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      pointer-events: none;
     }
-    footer p { font-size: 16px; }
-    footer a {
-      color: var(--primary-color);
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    footer a:hover {
-      text-decoration: underline;
-      color: #fff;
+    .info-icon:hover::after {
+      opacity: 1;
     }
     .modal-overlay {
       display: none;
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      background: var(--modal-bg);
+      background: rgba(0, 0, 0, 0.8);
       z-index: 100;
       align-items: center;
       justify-content: center;
-      animation: fadeInModal 0.3s ease-in-out;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
-    .modal-overlay.active { display: flex; }
-    @keyframes fadeInModal {
-      from { opacity: 0; }
-      to { opacity: 1; }
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
     }
     .modal {
-      background-color: var(--secondary-color);
+      background-color: rgba(44, 62, 80, 0.95);
       padding: 20px 30px;
       border-radius: 12px;
-      box-shadow: var(--button-shadow);
       max-width: 500px;
       width: 90%;
-      text-align: left;
-      position: relative;
+      color: #fff;
       transform: scale(0.8);
       opacity: 0;
       transition: all 0.3s ease-out;
-      backdrop-filter: blur(10px);
     }
     .modal-overlay.active .modal {
       transform: scale(1);
@@ -234,119 +153,111 @@
       margin-top: 0;
       font-size: 24px;
       font-weight: 600;
-      color: var(--text-color);
     }
     .modal p {
       font-size: 16px;
       line-height: 1.6;
       margin: 10px 0;
-      color: #eee;
     }
     .modal button.close-modal {
-      background-color: var(--primary-color);
-      color: var(--text-color);
+      background-color: #3498db;
+      color: #fff;
       border: none;
       padding: 10px 16px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s, transform 0.3s;
       position: absolute;
       top: 10px;
       right: 10px;
+      transition: background-color 0.3s;
     }
     .modal button.close-modal:hover {
       background-color: #2980b9;
-      transform: scale(1.05);
     }
-    /* Responsive para móviles */
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: #ddd;
+      background-color: rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 5;
+    }
+    footer a {
+      color: #3498db;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+      color: #fff;
+    }
     @media (max-width: 600px) {
-      .container { height: 100vh; justify-content: flex-start; padding: 10px 5%; }
-      .title { font-size: 28px; margin-bottom: 20px; }
-      .button-container { gap: 15px; width: 100%; }
+      .title { font-size: 28px; }
+      .button-container { width: 100%; }
       .button { font-size: 16px; padding: 12px 20px; }
-      .button i { font-size: 18px; }
-      .button-info { width: 30px; height: 30px; font-size: 14px; }
-      .info-icon { width: 40px; height: 40px; font-size: 20px; top: 10px; right: 10px; }
-      .modal { padding: 15px 20px; }
-      .modal h2 { font-size: 22px; }
-      .modal p { font-size: 15px; }
-      .modal button.close-modal { font-size: 15px; padding: 8px 14px; }
-      footer { padding: 15px 5%; font-size: 14px; }
+      .info-icon { width: 24px; height: 24px; font-size: 14px; }
+      .info-icon::after { font-size: 10px; top: 34px; }
+      footer { padding: 15px; }
     }
   </style>
 </head>
 <body>
-  <!-- Fondo del gradiente dinámico -->
   <div id="gradient"></div>
-  
-  <!-- Contenido principal -->
   <div class="container">
     <h1 class="title">Herramientas<br>GUARD-IA</h1>
     <div class="button-container">
       <div class="button-wrapper">
-        <a href="https://chatgpt.com/g/g-6766e58171cc81918eb92f23b79f66ae-guard-ia" class="button" target="_blank" aria-label="ChatGPT GUARD-IA">
+        <a href="https://chatgpt.com/g/g-6766e58171cc81918eb92f23b79f66ae-guard-ia" class="button" target="_blank" rel="noopener noreferrer">
           <i class="fas fa-robot"></i> ChatGPT GUARD-IA
         </a>
-        <span class="button-info" data-title="ChatGPT GUARD-IA" data-text="Al hacer clic, serás redirigido a una interfaz web de ChatGPT para interactuar con GPT GUARD-IA." tabindex="0" aria-label="Más información sobre ChatGPT GUARD-IA" onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
-        <a href="herramientas-guardia/calculadora-de-drogas/index.html" class="button" target="_self" aria-label="Calculadora de Drogas">
+        <a href="herramientas-guardia/calculadora-de-drogas/index.html" class="button" target="_self">
           <i class="fas fa-calculator"></i> Calculadora de Drogas
         </a>
-        <span class="button-info" data-title="Calculadora de Drogas" data-text="Serás redirigido a la Calculadora de Drogas. La información ofrecida es meramente orientativa, por lo que es responsabilidad del usuario corroborarla." tabindex="0" aria-label="Más información sobre Calculadora de Drogas" onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
-        <a href="herramientas-guardia/bloc-de-notas/index.html" class="button" target="_self" aria-label="Bloc de Notas">
+        <a href="herramientas-guardia/bloc-de-notas/index.html" class="button" target="_self">
           <i class="fas fa-sticky-note"></i> Bloc de Notas
         </a>
-        <span class="button-info" data-title="Bloc de Notas" data-text="Accederás a un bloc de notas digital. La información se almacena únicamente en tu dispositivo, permitiéndote guardar o compartir el contenido sin enviarlo a servidores." tabindex="0" aria-label="Más información sobre Bloc de Notas" onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
-        <a href="https://saferlayer.com/" class="button" target="_blank" aria-label="Marca de agua by Saferlayer">
+        <a href="https://saferlayer.com/" class="button" target="_blank" rel="noopener noreferrer">
           <i class="fas fa-tint"></i> Marca de agua by Saferlayer
         </a>
-        <span class="button-info" data-title="Marca de agua by Saferlayer" data-text="Al hacer clic, serás redirigido a la web https://saferlayer.com/" tabindex="0" aria-label="Más información sobre Marca de agua by Saferlayer" onclick="showButtonInfo(this)">i</span>
       </div>
     </div>
   </div>
-  
-  <!-- Ícono de información -->
-  <div class="info-icon" tabindex="0" aria-label="Información general" onclick="showModal('Información', 'Esta herramienta no almacena información en servidores. Toda la información se guarda localmente en tu dispositivo y puede eliminarse cuando lo decidas, garantizando tu privacidad.')">
-    <i class="fas fa-info"></i>
+
+  <div class="info-icon" onclick="showModal('Información General', 'Esta página ofrece herramientas útiles y gratuitas. El creador no recibe ninguna compensación a cambio de su uso. Todo se guarda localmente en tu dispositivo, asegurando tu privacidad. El uso de estas herramientas es responsabilidad del usuario final.')">
+    ?
   </div>
-  
-  <!-- Footer -->
+
   <footer>
-    <p>Contacta con el creador: <a href="https://t.me/OnefraGT" target="_blank">@OnefraGT</a></p>
+    <a href="https://t.me/OnefraGT" target="_blank" rel="noopener noreferrer">
+      <i class="fab fa-telegram-plane" style="font-size: 24px;"></i> Contacta con @OnefraGT
+    </a>
   </footer>
-  
-  <!-- Modal -->
-  <div class="modal-overlay" id="modalOverlay">
+
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnClickOutside(event)">
     <div class="modal">
-      <button class="close-modal" onclick="closeModal()" aria-label="Cerrar modal"><i class="fas fa-times"></i></button>
+      <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
       <h2 id="modalTitle">Información</h2>
       <p id="modalText">Texto de información</p>
     </div>
   </div>
-  
-  <!-- jQuery (para el gradiente) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+
   <script>
-    // Código para el gradiente dinámico
-    var colors = [
-      [62,35,255],
-      [60,255,60],
-      [255,35,98],
-      [45,175,230],
-      [255,0,255],
-      [255,128,0]
-    ];
+    // Gradiente dinámico
+    var colors = [[62, 35, 255], [60, 255, 60], [255, 35, 98], [45, 175, 230], [255, 0, 255], [255, 128, 0]];
     var step = 0;
-    var colorIndices = [0,1,2,3];
+    var colorIndices = [0, 1, 2, 3];
     var gradientSpeed = 0.002;
+
     function updateGradient() {
-      if (typeof $ === "undefined") return;
       var c0_0 = colors[colorIndices[0]];
       var c0_1 = colors[colorIndices[1]];
       var c1_0 = colors[colorIndices[2]];
@@ -360,11 +271,7 @@
       var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
       var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
       var color2 = "rgb("+r2+","+g2+","+b2+")";
-      $('#gradient').css({
-        background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"
-      }).css({
-        background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"
-      });
+      document.getElementById('gradient').style.background = "linear-gradient(to right, "+color1+", "+color2+")";
       step += gradientSpeed;
       if (step >= 1) {
         step %= 1;
@@ -373,22 +280,25 @@
         colorIndices[1] = (colorIndices[1] + Math.floor(1 + Math.random() * (colors.length - 1))) % colors.length;
         colorIndices[3] = (colorIndices[3] + Math.floor(1 + Math.random() * (colors.length - 1))) % colors.length;
       }
+      requestAnimationFrame(updateGradient);
     }
-    setInterval(updateGradient, 10);
-    
-    // Funciones para el modal de información
+    updateGradient();
+
+    // Funciones del modal
     function showModal(title, text) {
       document.getElementById("modalTitle").innerText = title;
       document.getElementById("modalText").innerText = text;
       document.getElementById("modalOverlay").classList.add("active");
     }
+
     function closeModal() {
       document.getElementById("modalOverlay").classList.remove("active");
     }
-    function showButtonInfo(element) {
-      var title = element.getAttribute("data-title");
-      var text = element.getAttribute("data-text");
-      showModal(title, text);
+
+    function closeModalOnClickOutside(event) {
+      if (event.target === document.getElementById("modalOverlay")) {
+        closeModal();
+      }
     }
   </script>
 </body>
