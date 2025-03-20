@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const capturePhotoButton = document.getElementById('capturePhotoButton');
   const photoPreviewContainer = document.getElementById('photoPreviewContainer');
   const photoPreview = document.getElementById('photoPreview');
-  const photoActions = document.getElementById('photoActions');
+  const photoActions = document.querySelector('.photo-actions');
   const retakePhotoButton = document.getElementById('retakePhotoButton');
   const deletePhotoButton = document.getElementById('deletePhotoButton');
   const generateReportButton = document.getElementById('generateReportButton');
@@ -25,9 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
         cameraStream = stream;
         video.srcObject = stream;
         video.play();
-        videoContainer.style.display = 'block';
+        videoContainer.classList.remove('hidden');
         capturePhotoButton.style.display = 'block';
-        activateCameraButton.style.display = 'none';
+        activateCameraButton.classList.add('hidden');
       })
       .catch(err => {
         console.error("Error al acceder a la cámara:", err);
@@ -48,10 +48,12 @@ document.addEventListener('DOMContentLoaded', () => {
     tempPhotoData = canvas.toDataURL('image/png');
 
     photoPreview.src = tempPhotoData;
-    photoPreviewContainer.style.display = 'block';
-    videoContainer.style.display = 'none';
+    photoPreviewContainer.classList.remove('hidden');
+    videoContainer.classList.add('hidden');
     capturePhotoButton.style.display = 'none';
-    photoActions.style.display = 'flex';
+    if (photoActions) {
+      photoActions.classList.remove('hidden');
+    }
 
     // Detener la cámara
     stopCamera();
@@ -63,42 +65,35 @@ document.addEventListener('DOMContentLoaded', () => {
       cameraStream.getTracks().forEach(track => track.stop());
       cameraStream = null;
     }
-    videoContainer.style.display = 'none';
+    videoContainer.classList.add('hidden');
     capturePhotoButton.style.display = 'none';
-    activateCameraButton.style.display = 'block';
+    activateCameraButton.classList.remove('hidden');
   }
 
-  // Activar la cámara al pulsar el botón azul
+  // Eventos de la cámara y foto
   activateCameraButton.addEventListener('click', () => {
-    if (!cameraStream) {
-      startCamera();
-    }
+    if (!cameraStream) startCamera();
   });
 
-  // Evento para capturar la foto
-  capturePhotoButton.addEventListener('click', () => {
-    capturePhoto();
-  });
+  capturePhotoButton.addEventListener('click', capturePhoto);
 
-  // Evento para rehacer la foto
   retakePhotoButton.addEventListener('click', () => {
     tempPhotoData = '';
-    photoPreviewContainer.style.display = 'none';
-    photoActions.style.display = 'none';
+    photoPreviewContainer.classList.add('hidden');
+    if (photoActions) photoActions.classList.add('hidden');
     startCamera();
   });
 
-  // Evento para eliminar la foto
   deletePhotoButton.addEventListener('click', () => {
     if (confirm("¿Estás seguro de eliminar la foto?")) {
       tempPhotoData = '';
-      photoPreviewContainer.style.display = 'none';
-      photoActions.style.display = 'none';
-      activateCameraButton.style.display = 'block';
+      photoPreviewContainer.classList.add('hidden');
+      if (photoActions) photoActions.classList.add('hidden');
+      activateCameraButton.classList.remove('hidden');
     }
   });
 
-  // Guardar la nota, incluyendo el campo "Lugar de intervención"
+  // Guardar la nota
   noteForm.addEventListener('submit', (e) => {
     e.preventDefault();
     saveNote();
@@ -124,15 +119,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     noteForm.reset();
     tempPhotoData = '';
-    photoPreviewContainer.style.display = 'none';
-    photoActions.style.display = 'none';
-    activateCameraButton.style.display = 'block';
+    photoPreviewContainer.classList.add('hidden');
+    if (photoActions) photoActions.classList.add('hidden');
+    activateCameraButton.classList.remove('hidden');
     alert("Nota guardada exitosamente.");
 
     lastSavedNote = noteData;
   }
 
-  // Compartir nota usando la Web Share API (solo texto en este ejemplo)
+  // Compartir nota usando Web Share API
   function shareNote(noteData) {
     const shareText = `Nota Policial:
 Documento: ${noteData.documentNumber || 'N/A'}
@@ -158,7 +153,7 @@ Hechos: ${noteData.facts || 'N/A'}`;
     }
   }
 
-  // Mostrar notas guardadas en pantalla
+  // Mostrar notas guardadas
   function displayNotes() {
     const notes = JSON.parse(localStorage.getItem('notes')) || [];
     if (notes.length === 0) {
@@ -198,7 +193,7 @@ Hechos: ${noteData.facts || 'N/A'}`;
     }
   };
 
-  // Función para generar el informe en formato de texto legible
+  // Generar informe en formato de texto
   generateReportButton.addEventListener('click', generateReport);
 
   function generateReport() {
