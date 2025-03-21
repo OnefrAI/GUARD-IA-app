@@ -9,6 +9,7 @@
         integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" 
         crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
+    /* Estilos generales */
     body {
       margin: 0;
       padding: 0;
@@ -41,6 +42,7 @@
       font-weight: 600;
       color: #fff;
       text-shadow: 2px 2px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
     }
     .button-container {
       display: flex;
@@ -69,6 +71,7 @@
       align-items: center;
       gap: 10px;
       flex: 1;
+      text-align: center;
     }
     .button:hover {
       transform: translateY(-5px);
@@ -134,6 +137,111 @@
     .info-icon:hover::after {
       opacity: 1;
     }
+    /* Sección de Canales de Acción Policial */
+    .police-channels {
+      padding: 40px 20px;
+      position: relative;
+      z-index: 5;
+    }
+    .police-channels .button-container {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .police-channels .button {
+      padding: 10px 20px;
+      font-size: 16px;
+      text-align: center;
+    }
+    /* Sección de Lecturas Policiales Recomendadas (Slider) */
+    .police-readings {
+      padding: 40px 20px;
+      position: relative;
+      z-index: 5;
+    }
+    .slider-container {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .slider-wrapper {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+    .card {
+      min-width: 100%;
+      box-sizing: border-box;
+      padding: 20px;
+      text-align: center;
+    }
+    .card img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 15px;
+    }
+    .card h3 {
+      margin: 10px 0;
+      font-size: 20px;
+    }
+    .card p {
+      font-size: 16px;
+      line-height: 1.4;
+    }
+    .slider-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: #fff;
+      padding: 10px;
+      cursor: pointer;
+      border-radius: 50%;
+      z-index: 10;
+      font-size: 20px;
+    }
+    .slider-btn.prev {
+      left: 10px;
+    }
+    .slider-btn.next {
+      right: 10px;
+    }
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: #fff;
+      background-color: rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 5;
+    }
+    footer a {
+      color: #fff;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    footer a:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 600px) {
+      .title { font-size: 28px; }
+      .button-container { width: 100%; }
+      .button { font-size: 16px; padding: 12px 20px; }
+      .button-info { width: 20px; height: 20px; font-size: 14px; }
+      .info-icon { width: 24px; height: 24px; font-size: 14px; }
+      .info-icon::after { font-size: 10px; top: 34px; }
+    }
+    /* Estilos para el Modal */
     .modal-overlay {
       display: none;
       position: fixed;
@@ -162,6 +270,7 @@
       transform: scale(0.8);
       opacity: 0;
       transition: all 0.3s ease-out;
+      position: relative;
     }
     .modal-overlay.active .modal {
       transform: scale(1);
@@ -192,40 +301,12 @@
     .modal button.close-modal:hover {
       background-color: #2980b9;
     }
-    footer {
-      padding: 20px;
-      text-align: center;
-      color: #ddd;
-      background-color: rgba(0, 0, 0, 0.3);
-      position: relative;
-      z-index: 5;
-    }
-    footer a {
-      color: #3498db;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-    }
-    footer a:hover {
-      text-decoration: underline;
-      color: #fff;
-    }
-    @media (max-width: 600px) {
-      .title { font-size: 28px; }
-      .button-container { width: 100%; }
-      .button { font-size: 16px; padding: 12px 20px; }
-      .button-info { width: 20px; height: 20px; font-size: 14px; }
-      .info-icon { width: 24px; height: 24px; font-size: 14px; }
-      .info-icon::after { font-size: 10px; top: 34px; }
-      footer { padding: 15px; }
-    }
   </style>
 </head>
 <body>
   <div id="gradient"></div>
   <div class="container">
+    <!-- Título principal en dos líneas -->
     <h1 class="title">Herramientas<br>GUARD-IA</h1>
     <div class="button-container">
       <div class="button-wrapper">
@@ -255,6 +336,60 @@
     </div>
   </div>
 
+  <!-- Sección de Canales de Acción Policial con título en dos líneas -->
+  <section class="police-channels">
+    <h2 class="title">CANALES DE<br>ACCIÓN POLICIAL</h2>
+    <div class="button-container">
+      <a href="https://www.youtube.com/@PoliceActivity" class="button" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-video"></i> PoliceActivity
+      </a>
+      <a href="https://www.youtube.com/@RealWorldPolice" class="button" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-video"></i> Real World Police
+      </a>
+      <a href="https://www.youtube.com/@CodeBlueCam" class="button" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-video"></i> Code Blue Cam
+      </a>
+      <a href="https://www.youtube.com/@AuditTheAudit" class="button" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-video"></i> Audit the Audit
+      </a>
+      <a href="https://www.youtube.com/@PolicePursuits" class="button" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-video"></i> Police Pursuits
+      </a>
+    </div>
+  </section>
+
+  <!-- Sección de Lecturas Policiales Recomendadas (Slider) con los libros -->
+  <section class="police-readings">
+    <h2 class="title">LECTURAS POLICIALES<br>RECOMENDADAS</h2>
+    <div class="slider-container">
+      <button class="slider-btn prev" onclick="prevSlide()">&#10094;</button>
+      <div class="slider-wrapper" id="sliderWrapper">
+        <div class="card">
+          <img src="https://imgs.search.brave.com/VNMdgeChtgIurBN_p-DnqmSakN2ak7bRrP0Yo1n3ef8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuY2RuMi5idXNj/YWxpYnJlLmNvbS9m/aXQtaW4vNTIweDUy/MC8yZS80YS8yZTRh/YzYyZmIxMTJhOWNh/NDdmMTMwMGY4NzVk/OTUwNC5qcGc" alt="Sobre el Combate">
+          <h3>Sobre el Combate</h3>
+          <p>Dave Grossman</p>
+        </div>
+        <div class="card">
+          <img src="https://imgs.search.brave.com/8-PdIHSHt2WqbYUGXhLD_4Bpw8RWitCfRvV2KiHgqpo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuY2RuMy5idXNj/YWxpYnJlLmNvbS9m/aXQtaW4vNTIweDUy/MC9mZC82Yy9mZDZj/Mjc3ZDBmZDMyZmU3/NmJiN2MyZGMwZTc3/YjZhYi5qcGc" alt="Matar">
+          <h3>Matar</h3>
+          <p>Dave Grossman</p>
+        </div>
+        <div class="card">
+          <img src="https://imgs.search.brave.com/pOsg_as-IHCw3Y7BqzG17ZB9cw9PJCLFMZQ8GrqlEMI/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9waWN0/dXJlcy5hYmVib29r/cy5jb20vaXNibi85/Nzg4NDMwOTczNzA1/LWVzLTMwMC5qcGc" alt="En la Línea de Fuego">
+          <h3>En la Línea de Fuego</h3>
+          <p>Ernesto Pérez Vera y Fernando Pérez Pacho</p>
+        </div>
+        <div class="card">
+          <img src="https://imgs.search.brave.com/enDRu-RC4AbH2cwjiwP3a2vZhzAwYiOwerLcRTauW9U/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/bWFyY2lhbHBvbnMu/ZXMvbWVkaWEvaW1n/L3BvcnRhZGFzLzIw/MTkvMTAvMjkvOTc4/ODQxNTM3Mzc1OWpw/ZWc" alt="Tiroteo en Miami">
+          <h3>Tiroteo en Miami</h3>
+          <p>Sin autor</p>
+        </div>
+      </div>
+      <button class="slider-btn next" onclick="nextSlide()">&#10095;</button>
+    </div>
+  </section>
+
+  <!-- Ícono de información con leyenda original -->
   <div class="info-icon" onclick="showModal('Información General', 'Esta página ofrece herramientas útiles y gratuitas. El creador no recibe ninguna compensación a cambio de su uso. Todo se guarda localmente en tu dispositivo, asegurando tu privacidad. El uso de estas herramientas es responsabilidad del usuario final.')">
     ?
   </div>
@@ -265,6 +400,7 @@
     </a>
   </footer>
 
+  <!-- Modal -->
   <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnClickOutside(event)">
     <div class="modal">
       <button class="close-modal" onclick="closeModal()"><i class="fas fa-times"></i></button>
@@ -279,7 +415,6 @@
     var step = 0;
     var colorIndices = [0, 1, 2, 3];
     var gradientSpeed = 0.002;
-
     function updateGradient() {
       var c0_0 = colors[colorIndices[0]];
       var c0_1 = colors[colorIndices[1]];
@@ -313,21 +448,34 @@
       document.getElementById("modalText").innerText = text;
       document.getElementById("modalOverlay").classList.add("active");
     }
-
     function closeModal() {
       document.getElementById("modalOverlay").classList.remove("active");
     }
-
     function showButtonInfo(element) {
       var title = element.getAttribute("data-title");
       var text = element.getAttribute("data-text");
       showModal(title, text);
     }
-
     function closeModalOnClickOutside(event) {
       if (event.target === document.getElementById("modalOverlay")) {
         closeModal();
       }
+    }
+
+    // Slider JS para Lecturas Policiales Recomendadas
+    const sliderWrapper = document.getElementById('sliderWrapper');
+    let currentSlide = 0;
+    const totalSlides = sliderWrapper.children.length;
+    function updateSlider() {
+      sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+    }
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % totalSlides;
+      updateSlider();
+    }
+    function prevSlide() {
+      currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+      updateSlider();
     }
   </script>
 </body>
