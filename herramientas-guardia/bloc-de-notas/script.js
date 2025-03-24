@@ -17,6 +17,23 @@ document.addEventListener('DOMContentLoaded', () => {
     let recognizing = false;
     let speechRecognition;
 
+    // Función para convertir dataURL a Blob
+    function dataURLtoBlob(dataurl) {
+        const arr = dataurl.split(',');
+        const mimeMatch = arr[0].match(/:(.*?);/);
+        if (!mimeMatch) {
+            throw new Error('No se pudo obtener el tipo MIME de la imagen');
+        }
+        const mime = mimeMatch[1];
+        const bstr = atob(arr[1]);
+        let n = bstr.length;
+        const u8arr = new Uint8Array(n);
+        while(n--) {
+            u8arr[n] = bstr.charCodeAt(n);
+        }
+        return new Blob([u8arr], { type: mime });
+    }
+
     if ('webkitSpeechRecognition' in window) {
         speechRecognition = new webkitSpeechRecognition();
         speechRecognition.continuous = true;
@@ -123,8 +140,8 @@ Hechos: ${noteData.facts || 'N/A'}`;
 
         try {
             if (noteData.photoUrl) {
-                const response = await fetch(noteData.photoUrl);
-                const blob = await response.blob();
+                // Convertir la dataURL a Blob mediante la función personalizada
+                const blob = dataURLtoBlob(noteData.photoUrl);
                 const file = new File([blob], 'foto_documento.png', { type: blob.type });
 
                 if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -223,7 +240,7 @@ Hechos: ${noteData.facts || 'N/A'}`;
         URL.revokeObjectURL(url);
     }
 
-    // Funcionalidad para abrir la cámara y mostrar el modal (forzando la cámara trasera)
+    // Abrir la cámara y mostrar el modal, forzando la cámara trasera
     takePhotoButton.addEventListener('click', openCameraModal);
 
     function openCameraModal() {
