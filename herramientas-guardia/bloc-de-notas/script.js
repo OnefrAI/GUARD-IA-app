@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let recognizing = false;
     let speechRecognition;
 
-
     if ('webkitSpeechRecognition' in window) {
         speechRecognition = new webkitSpeechRecognition();
         speechRecognition.continuous = true;
@@ -37,15 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
             dictationTextElement.textContent = 'Comenzar a Dictar';
             if (event.error === 'no-speech') {
                 alert('No se detectó habla. Por favor, habla de nuevo.');
-              } else if (event.error === 'audio-capture') {
+            } else if (event.error === 'audio-capture') {
                 alert('No se pudo acceder al micrófono. Asegúrate de que esté conectado y permitido.');
-              } else if (event.error === 'network') {
+            } else if (event.error === 'network') {
                 alert('Problema de red: verifica tu conexión a Internet.');
-              } else if (event.error === 'aborted') {
+            } else if (event.error === 'aborted') {
                 alert('El reconocimiento de voz se ha detenido.');
-              } else {
+            } else {
                 alert('Ocurrió un error durante el reconocimiento de voz. Inténtalo de nuevo.');
-              }
+            }
         };
 
         speechRecognition.onend = () => {
@@ -105,14 +104,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         noteForm.reset();
         factsTextarea.value = '';
-        // Reiniciar foto capturada
+        // Reiniciar foto capturada para la siguiente nota
         capturedPhotoDataUrl = null;
         alert("Nota guardada exitosamente.");
     }
 
-
-
-    // Función para compartir nota incluyendo foto si está presente
+    // Función para compartir la nota (incluyendo la foto si está presente)
     async function shareNote(noteData) {
         let shareText = `Nota Policial:
 Documento: ${noteData.documentNumber || 'N/A'}
@@ -126,7 +123,6 @@ Hechos: ${noteData.facts || 'N/A'}`;
 
         try {
             if (noteData.photoUrl) {
-                // Convertir dataURL a blob y luego a file
                 const response = await fetch(noteData.photoUrl);
                 const blob = await response.blob();
                 const file = new File([blob], 'foto_documento.png', { type: blob.type });
@@ -139,7 +135,6 @@ Hechos: ${noteData.facts || 'N/A'}`;
                     });
                     console.log('Nota compartida exitosamente con foto.');
                 } else {
-                    // Si no se puede compartir archivos, comparte solo texto e informa al usuario
                     await navigator.share({
                         title: 'Nota Policial',
                         text: shareText + '\n\n[Foto no incluida, tu navegador no soporta compartir archivos]'
@@ -158,7 +153,7 @@ Hechos: ${noteData.facts || 'N/A'}`;
         }
     }
 
-    // Mostrar notas guardadas
+    // Mostrar las notas guardadas
     function displayNotes() {
         const notes = JSON.parse(localStorage.getItem('notes')) || [];
         if (notes.length === 0) {
@@ -228,12 +223,12 @@ Hechos: ${noteData.facts || 'N/A'}`;
         URL.revokeObjectURL(url);
     }
 
-    // Funcionalidad para abrir la cámara y mostrar el modal
+    // Funcionalidad para abrir la cámara y mostrar el modal (forzando la cámara trasera)
     takePhotoButton.addEventListener('click', openCameraModal);
 
     function openCameraModal() {
         if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-            navigator.mediaDevices.getUserMedia({ video: true })
+            navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: "environment" } } })
                 .then(stream => {
                     mediaStream = stream;
                     video.srcObject = stream;
@@ -249,7 +244,7 @@ Hechos: ${noteData.facts || 'N/A'}`;
         }
     }
 
-    // Capturar foto del video
+    // Capturar la foto del video y guardarla
     captureButton.addEventListener('click', () => {
         const canvas = document.createElement('canvas');
         canvas.width = video.videoWidth;
@@ -260,7 +255,7 @@ Hechos: ${noteData.facts || 'N/A'}`;
         closeCameraModal();
     });
 
-    // Cancelar captura y cerrar modal
+    // Cancelar captura y cerrar el modal
     cancelCaptureButton.addEventListener('click', closeCameraModal);
 
     function closeCameraModal() {
