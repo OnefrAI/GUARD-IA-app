@@ -36,7 +36,8 @@ body {
   border-radius: 1rem;
   border: 1px solid var(--color-border);
   padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+              0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
 .header {
@@ -190,11 +191,11 @@ textarea {
 }
 
 .note {
-  background: #fef08a; /* Amarillo claro para el fondo de la nota */
+  background: #fef08a;
   border-radius: 0.75rem;
   padding: 1rem;
   border: 1px solid var(--color-border);
-  color: #000; /* Texto negro */
+  color: #000;
 }
 
 .note button {
@@ -310,46 +311,4 @@ textarea {
   max-width: 100%;
   margin-top: 1rem;
   border-radius: 0.5rem;
-}
-
-.recording {
-  animation: pulse 2s infinite;
-  color: red;
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-
-  50% {
-    transform: scale(1.2);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
-#startDictation {
-  background-color: #4CAF50;
-  /* Verde */
-  color: white;
-  padding: 10px 16px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-  margin-top: 10px;
-}
-
-#startDictation:hover {
-  background-color: #367c39;
-  /* Verde más oscuro */
-}
-
-#startDictation:active {
-  background-color: #2b5e2e;
-  /* Verde aún más oscuro */
 }
