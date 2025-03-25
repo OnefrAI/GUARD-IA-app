@@ -14,18 +14,10 @@
       margin: 0;
       padding: 0;
       font-family: "Poppins", Arial, sans-serif;
-      background-color: #000000;
+      background-color: #0A192F; /* Fondo azul oscuro, serio y profesional */
       display: flex;
       flex-direction: column;
       min-height: 100vh;
-    }
-    #gradient {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
     }
     .container {
       flex: 1;
@@ -52,11 +44,9 @@
       max-width: 500px;
     }
     .button-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: relative;
     }
+    /* Botones de Herramientas GUARD-IA */
     .button {
       background: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
@@ -69,18 +59,25 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
-      gap: 10px;
-      flex: 1;
-      text-align: center;
+      justify-content: space-between;
+      width: 100%;
     }
     .button:hover {
       transform: translateY(-5px);
       background: rgba(255, 255, 255, 0.2);
     }
+    .button-content {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      text-align: left;
+    }
     .button i {
       font-size: 20px;
     }
-    .button-info {
+    /* Ícono de info dentro del botón, pegado a la derecha */
+    .button .button-info {
       background-color: rgba(0, 0, 0, 0.6);
       color: #fff;
       border-radius: 50%;
@@ -91,13 +88,13 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      margin-left: 10px;
       transition: background-color 0.3s, transform 0.3s;
     }
-    .button-info:hover {
+    .button .button-info:hover {
       background-color: rgba(0, 0, 0, 0.8);
       transform: scale(1.1);
     }
+    /* Ícono de información global */
     .info-icon {
       position: fixed;
       top: 20px;
@@ -152,8 +149,8 @@
       margin: 0 auto;
     }
     .police-channels .button {
-      padding: 10px 20px;
-      font-size: 16px;
+      padding: 8px 12px;
+      font-size: 14px;
       text-align: center;
     }
     /* Sección de Lecturas Policiales Recomendadas (Slider) */
@@ -237,7 +234,7 @@
       .title { font-size: 28px; }
       .button-container { width: 100%; }
       .button { font-size: 16px; padding: 12px 20px; }
-      .button-info { width: 20px; height: 20px; font-size: 14px; }
+      .button .button-info { width: 20px; height: 20px; font-size: 14px; }
       .info-icon { width: 24px; height: 24px; font-size: 14px; }
       .info-icon::after { font-size: 10px; top: 34px; }
     }
@@ -304,39 +301,51 @@
   </style>
 </head>
 <body>
-  <div id="gradient"></div>
   <div class="container">
     <!-- Título principal en dos líneas -->
     <h1 class="title">Herramientas<br>GUARD-IA</h1>
     <div class="button-container">
+      <!-- Botones de Herramientas GUARD-IA con estructura modificada -->
       <div class="button-wrapper">
         <a href="https://chatgpt.com/g/g-6766e58171cc81918eb92f23b79f66ae-guard-ia" class="button" target="_blank" rel="noopener noreferrer">
-          <i class="fas fa-robot"></i> ChatGPT GUARD-IA
+          <div class="button-content">
+            <i class="fas fa-robot"></i>
+            <span class="button-text">ChatGPT GUARD-IA</span>
+          </div>
+          <span class="button-info" data-title="ChatGPT GUARD-IA" data-text="Interactúa con una versión personalizada de ChatGPT diseñada para GUARD-IA." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
-        <span class="button-info" data-title="ChatGPT GUARD-IA" data-text="Interactúa con una versión personalizada de ChatGPT diseñada para GUARD-IA." onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
         <a href="herramientas-guardia/calculadora-de-drogas/index.html" class="button" target="_self">
-          <i class="fas fa-calculator"></i> Calculadora de Drogas
+          <div class="button-content">
+            <i class="fas fa-calculator"></i>
+            <span class="button-text">Calculadora de Drogas</span>
+          </div>
+          <span class="button-info" data-title="Calculadora de Drogas" data-text="Herramienta para cálculos relacionados con drogas. Uso bajo responsabilidad del usuario." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
-        <span class="button-info" data-title="Calculadora de Drogas" data-text="Herramienta para cálculos relacionados con drogas. Uso bajo responsabilidad del usuario." onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
         <a href="herramientas-guardia/bloc-de-notas/index.html" class="button" target="_self">
-          <i class="fas fa-sticky-note"></i> Bloc de Notas
+          <div class="button-content">
+            <i class="fas fa-sticky-note"></i>
+            <span class="button-text">Bloc de Notas</span>
+          </div>
+          <span class="button-info" data-title="Bloc de Notas" data-text="Un bloc de notas digital que guarda tus notas localmente en tu dispositivo." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
-        <span class="button-info" data-title="Bloc de Notas" data-text="Un bloc de notas digital que guarda tus notas localmente en tu dispositivo." onclick="showButtonInfo(this)">i</span>
       </div>
       <div class="button-wrapper">
         <a href="https://saferlayer.com/" class="button" target="_blank" rel="noopener noreferrer">
-          <i class="fas fa-tint"></i> Marca de agua by Saferlayer
+          <div class="button-content">
+            <i class="fas fa-tint"></i>
+            <span class="button-text">Marca de agua by Saferlayer</span>
+          </div>
+          <span class="button-info" data-title="Marca de agua by Saferlayer" data-text="Herramienta externa para agregar marcas de agua a tus archivos." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
-        <span class="button-info" data-title="Marca de agua by Saferlayer" data-text="Herramienta externa para agregar marcas de agua a tus archivos." onclick="showButtonInfo(this)">i</span>
       </div>
     </div>
   </div>
 
-  <!-- Sección de Canales de Acción Policial con título en dos líneas -->
+  <!-- Sección de Canales de Acción Policial -->
   <section class="police-channels">
     <h2 class="title">CANALES DE<br>ACCIÓN POLICIAL</h2>
     <div class="button-container">
@@ -358,7 +367,7 @@
     </div>
   </section>
 
-  <!-- Sección de Lecturas Policiales Recomendadas (Slider) con los libros -->
+  <!-- Sección de Lecturas Policiales Recomendadas (Slider) -->
   <section class="police-readings">
     <h2 class="title">LECTURAS POLICIALES<br>RECOMENDADAS</h2>
     <div class="slider-container">
@@ -389,8 +398,8 @@
     </div>
   </section>
 
-  <!-- Ícono de información con leyenda original -->
-  <div class="info-icon" onclick="showModal('Información General', 'Esta página ofrece herramientas útiles y gratuitas. El creador no recibe ninguna compensación a cambio de su uso. Todo se guarda localmente en tu dispositivo, asegurando tu privacidad. El uso de estas herramientas es responsabilidad del usuario final.')">
+  <!-- Ícono de información global -->
+  <div class="info-icon" id="globalInfoIcon">
     ?
   </div>
 
@@ -410,38 +419,6 @@
   </div>
 
   <script>
-    // Gradiente dinámico
-    var colors = [[62, 35, 255], [60, 255, 60], [255, 35, 98], [45, 175, 230], [255, 0, 255], [255, 128, 0]];
-    var step = 0;
-    var colorIndices = [0, 1, 2, 3];
-    var gradientSpeed = 0.002;
-    function updateGradient() {
-      var c0_0 = colors[colorIndices[0]];
-      var c0_1 = colors[colorIndices[1]];
-      var c1_0 = colors[colorIndices[2]];
-      var c1_1 = colors[colorIndices[3]];
-      var istep = 1 - step;
-      var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
-      var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
-      var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
-      var color1 = "rgb("+r1+","+g1+","+b1+")";
-      var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
-      var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
-      var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
-      var color2 = "rgb("+r2+","+g2+","+b2+")";
-      document.getElementById('gradient').style.background = "linear-gradient(to right, "+color1+", "+color2+")";
-      step += gradientSpeed;
-      if (step >= 1) {
-        step %= 1;
-        colorIndices[0] = colorIndices[1];
-        colorIndices[2] = colorIndices[3];
-        colorIndices[1] = (colorIndices[1] + Math.floor(1 + Math.random() * (colors.length - 1))) % colors.length;
-        colorIndices[3] = (colorIndices[3] + Math.floor(1 + Math.random() * (colors.length - 1))) % colors.length;
-      }
-      requestAnimationFrame(updateGradient);
-    }
-    updateGradient();
-
     // Funciones del modal
     function showModal(title, text) {
       document.getElementById("modalTitle").innerText = title;
@@ -451,16 +428,22 @@
     function closeModal() {
       document.getElementById("modalOverlay").classList.remove("active");
     }
-    function showButtonInfo(element) {
-      var title = element.getAttribute("data-title");
-      var text = element.getAttribute("data-text");
-      showModal(title, text);
-    }
     function closeModalOnClickOutside(event) {
       if (event.target === document.getElementById("modalOverlay")) {
         closeModal();
       }
     }
+    function showButtonInfo(element) {
+      var title = element.getAttribute("data-title");
+      var text = element.getAttribute("data-text");
+      showModal(title, text);
+    }
+
+    // Asignar evento al ícono global de info
+    document.getElementById("globalInfoIcon").addEventListener("click", function(e) {
+      e.stopPropagation();
+      showModal("Información General", "Esta página ofrece herramientas útiles y gratuitas. El creador no recibe ninguna compensación a cambio de su uso. Todo se guarda localmente en tu dispositivo, asegurando tu privacidad. El uso de estas herramientas es responsabilidad del usuario final.");
+    });
 
     // Slider JS para Lecturas Policiales Recomendadas
     const sliderWrapper = document.getElementById('sliderWrapper');
