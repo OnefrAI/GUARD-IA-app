@@ -19,6 +19,7 @@
       flex-direction: column;
       min-height: 100vh;
     }
+    /* No se usa gradiente */
     .container {
       flex: 1;
       padding: 40px 20px;
@@ -59,7 +60,7 @@
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: space-between; /* Se separa el contenido del ícono info */
       width: 100%;
     }
     .button:hover {
@@ -140,18 +141,20 @@
       position: relative;
       z-index: 5;
     }
+    /* Botones de Canales: reducir tamaño para mejor responsividad */
     .police-channels .button-container {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 12px;
       width: 100%;
       max-width: 500px;
       margin: 0 auto;
     }
     .police-channels .button {
-      padding: 8px 12px;
-      font-size: 14px;
+      padding: 6px 8px;
+      font-size: 12px;
       text-align: center;
+      box-shadow: none;
     }
     /* Sección de Lecturas Policiales Recomendadas (Slider) */
     .police-readings {
@@ -312,7 +315,7 @@
             <i class="fas fa-robot"></i>
             <span class="button-text">ChatGPT GUARD-IA</span>
           </div>
-          <span class="button-info" data-title="ChatGPT GUARD-IA" data-text="Interactúa con una versión personalizada de ChatGPT diseñada para GUARD-IA." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
+          <span class="button-info" data-title="ChatGPT GUARD-IA" data-text="Interactúa con una versión personalizada de ChatGPT diseñada para GUARD-IA." onclick="event.preventDefault(); event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
       </div>
       <div class="button-wrapper">
@@ -321,7 +324,7 @@
             <i class="fas fa-calculator"></i>
             <span class="button-text">Calculadora de Drogas</span>
           </div>
-          <span class="button-info" data-title="Calculadora de Drogas" data-text="Herramienta para cálculos relacionados con drogas. Uso bajo responsabilidad del usuario." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
+          <span class="button-info" data-title="Calculadora de Drogas" data-text="Herramienta para cálculos relacionados con drogas. Uso bajo responsabilidad del usuario." onclick="event.preventDefault(); event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
       </div>
       <div class="button-wrapper">
@@ -330,7 +333,7 @@
             <i class="fas fa-sticky-note"></i>
             <span class="button-text">Bloc de Notas</span>
           </div>
-          <span class="button-info" data-title="Bloc de Notas" data-text="Un bloc de notas digital que guarda tus notas localmente en tu dispositivo." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
+          <span class="button-info" data-title="Bloc de Notas" data-text="Un bloc de notas digital que guarda tus notas localmente en tu dispositivo." onclick="event.preventDefault(); event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
       </div>
       <div class="button-wrapper">
@@ -339,7 +342,7 @@
             <i class="fas fa-tint"></i>
             <span class="button-text">Marca de agua by Saferlayer</span>
           </div>
-          <span class="button-info" data-title="Marca de agua by Saferlayer" data-text="Herramienta externa para agregar marcas de agua a tus archivos." onclick="event.stopPropagation(); showButtonInfo(this)">i</span>
+          <span class="button-info" data-title="Marca de agua by Saferlayer" data-text="Herramienta externa para agregar marcas de agua a tus archivos." onclick="event.preventDefault(); event.stopPropagation(); showButtonInfo(this)">i</span>
         </a>
       </div>
     </div>
@@ -399,9 +402,7 @@
   </section>
 
   <!-- Ícono de información global -->
-  <div class="info-icon" id="globalInfoIcon">
-    ?
-  </div>
+  <div class="info-icon" id="globalInfoIcon"></div>
 
   <footer>
     <a href="https://t.me/OnefraGT" target="_blank" rel="noopener noreferrer">
@@ -441,6 +442,7 @@
 
     // Asignar evento al ícono global de info
     document.getElementById("globalInfoIcon").addEventListener("click", function(e) {
+      e.preventDefault();
       e.stopPropagation();
       showModal("Información General", "Esta página ofrece herramientas útiles y gratuitas. El creador no recibe ninguna compensación a cambio de su uso. Todo se guarda localmente en tu dispositivo, asegurando tu privacidad. El uso de estas herramientas es responsabilidad del usuario final.");
     });
